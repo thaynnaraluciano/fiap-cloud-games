@@ -1,0 +1,19 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Api/bin/Debug/net8.0
+/Api/obj
+/CrossCutting/CrossCutting.Configuration/bin/Debug/net8.0
+/CrossCutting/CrossCutting.Configuration/obj
+/CrossCutting/CrossCutting.Exceptions/bin/Debug/net8.0
+/CrossCutting/CrossCutting.Exceptions/obj
+/Domain/bin/Debug/net8.0
+/Domain/obj
+/Infrastructure/Infrastructure.Data/bin/Debug/net8.0
+/Infrastructure/Infrastructure.Data/obj
+/Infrastructure/Infrastructure.Services/bin/Debug/net8.0
+/Infrastructure/Infrastructure.Services/obj
+/Tests/bin/Debug/net8.0
+/Tests/obj
