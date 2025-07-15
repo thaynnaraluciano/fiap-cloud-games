@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj" />
+	<ProjectReference Include="..\CrossCutting\CrossCutting.Exceptions\CrossCutting.Exceptions.csproj" />
+	<ProjectReference Include="..\Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.Services\Infrastructure.Services.csproj" />
   </ItemGroup>
 
 </Project>

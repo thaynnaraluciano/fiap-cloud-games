@@ -1,25 +1,27 @@
-﻿using Infrastructure.Data.Interfaces.Jogos;
+﻿using AutoMapper;
+using Infrastructure.Data.Interfaces.Jogos;
 using Infrastructure.Data.Models.Jogos;
 using MediatR;
 
 namespace Domain.Commands.v1.Jogos.CriarJogo
 {
-    public class CriarJogoCommandHandler : IRequestHandler<CriarJogoCommand, Unit>
+    public class CriarJogoCommandHandler : IRequestHandler<CriarJogoCommand, CriarJogoCommandResponse>
     {
         private readonly IJogoRepository _jogoRepository;
+        private readonly IMapper _mapper;
 
-        public CriarJogoCommandHandler(IJogoRepository jogoRepository)
+        public CriarJogoCommandHandler(IJogoRepository jogoRepository, IMapper mapper)
         {
             _jogoRepository = jogoRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(CriarJogoCommand request, CancellationToken cancellationToken)
+        public async Task<CriarJogoCommandResponse> Handle(CriarJogoCommand request, CancellationToken cancellationToken)
         {
             var jogo = new JogoModel(request.Nome, request.Descricao, request.Preco, request.DataLancamento);
 
             await _jogoRepository.AdicionarAsync(jogo);
-
-            return Unit.Value;  
+            return _mapper.Map<CriarJogoCommandResponse>(jogo);
         }
     }
 }

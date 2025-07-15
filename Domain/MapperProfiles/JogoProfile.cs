@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
-using Domain.Commands.v1.Jogos.JogoResponses;
+using Domain.Commands.v1.Jogos.AtualizarJogo;
+using Domain.Commands.v1.Jogos.BuscarJogoPorId;
+using Domain.Commands.v1.Jogos.CriarJogo;
+using Domain.Commands.v1.Jogos.ListarJogosCommand;
 using Infrastructure.Data.Models.Jogos;
 
 namespace Domain.MapperProfiles
@@ -9,6 +12,9 @@ namespace Domain.MapperProfiles
         public JogoProfile()
         {
             CreateMap<JogoModel, ListarJogoCommandResponse>();
+            CreateMap<JogoModel, AtualizarJogoCommandResponse>();
+            CreateMap<JogoModel, CriarJogoCommandResponse>();
+            CreateMap<JogoModel, BuscarJogoPorIdCommandResponse>();
         }
     }
 }

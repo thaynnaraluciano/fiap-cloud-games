@@ -1,4 +1,4 @@
-﻿using Domain.Commands.v1.Jogos.JogoResponses;
+﻿using Domain.Commands.v1.Jogos.ListarJogosCommand;
 using Infrastructure.Data.Models.Jogos;
 using MediatR;
 

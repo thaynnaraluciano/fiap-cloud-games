@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Commands.v1.Jogos.JogoResponses;
+using Domain.Commands.v1.Jogos.ListarJogosCommand;
 using Infrastructure.Data.Interfaces.Jogos;
 using Infrastructure.Data.Models.Jogos;
 using MediatR;
@@ -21,7 +21,6 @@ namespace Domain.Commands.v1.Jogos.BuscarTodosJogosCommand
         {
             var jogos = await _jogoRepository.ObterTodosAsync();
             return _mapper.Map<IEnumerable<ListarJogoCommandResponse>>(jogos);
-
         }
     }
 }

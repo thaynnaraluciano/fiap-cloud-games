@@ -2,7 +2,7 @@
 
 namespace Domain.Commands.v1.Jogos.AtualizarJogo
 {
-    public class AtualizarJogoCommand : IRequest<Unit>
+    public class AtualizarJogoCommand : IRequest<AtualizarJogoCommandResponse>
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }

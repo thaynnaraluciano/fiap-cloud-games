@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Domain.Commands.v1.Jogos.CriarJogo
 {
-    public class CriarJogoCommand : IRequest<Unit>
+    public class CriarJogoCommand : IRequest<CriarJogoCommandResponse>
     {
         public string Nome { get; set; } = null!;
         public string Descricao { get; set; } = null!;
