@@ -4,10 +4,13 @@ using CrossCutting.Configuration.AppModels;
 using CrossCutting.Exceptions.Middlewares;
 using Domain.Commands.v1.Login;
 using FluentValidation;
+using Infrastructure.Data;
 using Infrastructure.Services.Interfaces.v1;
 using Infrastructure.Services.Services.v1;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +56,8 @@ builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
 // TO DO: configs de banco
+builder.Services.AddDbContext<AppDbContext>(options =>options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 //builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
