@@ -1,8 +1,10 @@
 using Api.Utils;
 using CrossCutting.Configuration;
 using CrossCutting.Configuration.AppModels;
+using CrossCutting.Configuration.Authorization;
 using CrossCutting.Exceptions.Middlewares;
 using Domain.Commands.v1.Login;
+using Domain.Enums;
 using FluentValidation;
 using Infrastructure.Services.Interfaces.v1;
 using Infrastructure.Services.Services.v1;
@@ -28,10 +30,8 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("PoliticaDeAdmin", policy =>
-        policy.RequireRole("Administrador"))
-    .AddPolicy("PoliticaDeUsuario", policy =>
-        policy.RequireRole("Usuario"));
+    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuario.Administrador))
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuario.Usuario));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

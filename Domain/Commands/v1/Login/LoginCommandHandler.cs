@@ -32,7 +32,7 @@ namespace Domain.Commands.v1.Login
             var user = new
             {
                 Senha = "senhaDoUsuario",
-                Perfil = PerfilUsuarioEnum.Usuario
+                Perfil = PerfilUsuario.Usuario
             };
 
             var hashSenha = _criptografiaService.HashSenha(command.Senha);
@@ -42,7 +42,7 @@ namespace Domain.Commands.v1.Login
 
             _logger.LogInformation($"Gerando token jwt para {command.Email}");
 
-            var token = _tokenService.GerarToken(command.Email!, user.Perfil.ToString());
+            var token = _tokenService.GerarToken(command.Email!, user.Perfil);
 
             _logger.LogInformation("Usuário logado com sucesso");
 
