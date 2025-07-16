@@ -15,6 +15,7 @@ namespace Domain.MapperProfiles
             CreateMap<JogoModel, AtualizarJogoCommandResponse>();
             CreateMap<JogoModel, CriarJogoCommandResponse>();
             CreateMap<JogoModel, BuscarJogoPorIdCommandResponse>();
+            CreateMap<CriarJogoCommand, JogoModel>();
         }
     }
 }

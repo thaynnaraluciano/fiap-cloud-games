@@ -18,7 +18,7 @@ namespace Domain.Commands.v1.Jogos.CriarJogo
 
         public async Task<CriarJogoCommandResponse> Handle(CriarJogoCommand request, CancellationToken cancellationToken)
         {
-            var jogo = new JogoModel(request.Nome, request.Descricao, request.Preco, request.DataLancamento);
+            var jogo = _mapper.Map<JogoModel>(request);
 
             await _jogoRepository.AdicionarAsync(jogo);
             return _mapper.Map<CriarJogoCommandResponse>(jogo);
