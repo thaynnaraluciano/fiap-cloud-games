@@ -3,7 +3,7 @@
     public class CriarJogoCommandResponse
     {
         public Guid Id { get; set; }
-        public string Nome { get; set; } = string.Empty;
+        public string? Nome { get; set; }
         public decimal Preco { get; set; }
     }
 }
