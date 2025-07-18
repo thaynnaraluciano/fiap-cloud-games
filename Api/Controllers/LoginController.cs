@@ -25,17 +25,6 @@ namespace Api.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("TesteMigration")]
-        public async Task<IActionResult> Teste()
-        {
-            pessoaTeste teste = new pessoaTeste();
-            teste.NomePessoa = "BRUNO LUIZ DE SOUZA";
-            context.pessoaTeste.Add(teste);
-            await context.SaveChangesAsync();
-            return Ok();
-        }
 
     }
 }
