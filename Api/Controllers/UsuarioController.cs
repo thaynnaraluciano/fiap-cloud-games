@@ -53,8 +53,9 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Remover(RemoverUsuarioCommand command)
+        public async Task<IActionResult> Remover(Guid id)
         {
+            var command = new RemoverUsuarioCommand(id);
             await _mediator.Send(command);
 
             return NoContent();

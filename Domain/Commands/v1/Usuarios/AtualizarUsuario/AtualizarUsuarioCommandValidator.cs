@@ -23,9 +23,9 @@ namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
                 .Length(3, 100).WithMessage("O e-mail o usuário deve ter entre 5 e 100 caracteres");
 
             RuleFor(command => command.PerfilUsuario)
-                .Empty().WithMessage("Necessário informar o perfil do usuário")
-                .LessThan(1).WithMessage("Tipo de usuário incorreto")
-                .GreaterThan(2).WithMessage("Tipo de usuário incorreto");
+                .NotEmpty().WithMessage("Necessário informar o perfil do usuário")
+                .GreaterThanOrEqualTo(1).WithMessage("Tipo de usuário incorreto")
+                .LessThanOrEqualTo(2).WithMessage("Tipo de usuário incorreto");
         }
     }
 }

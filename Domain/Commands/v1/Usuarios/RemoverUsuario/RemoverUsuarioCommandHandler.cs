@@ -18,7 +18,7 @@ namespace Domain.Commands.v1.Usuarios.RemoverUsuario
 
             if (usuario == null) 
             {
-                throw new KeyNotFoundException($"Jogo com ID {request.Id} não encontrado.");
+                throw new KeyNotFoundException($"Usuario com ID {request.Id} não encontrado.");
             }
 
             await _usuarioRepository.RemoverAsync(usuario);
