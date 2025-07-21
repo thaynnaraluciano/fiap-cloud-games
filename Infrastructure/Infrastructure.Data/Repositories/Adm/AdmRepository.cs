@@ -19,8 +19,9 @@ namespace Infrastructure.Data.Repositories.Adm
         }
         public async Task<bool> AlteraStatusUser(AlteraStatusUserModel userModel)
         {
-            var user = await _context.User.Where(x => x.cGuid == userModel.cGuid).FirstOrDefaultAsync();
-
+            //TO DO: Alterar para os users já criados.
+            //var user = await _context.User.Where(x => x.cGuid == userModel.cGuid).FirstOrDefaultAsync();
+            var user = new AlteraStatusUserModel();
             if (user == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado");

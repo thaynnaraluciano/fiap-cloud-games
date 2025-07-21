@@ -18,6 +18,5 @@ namespace Infrastructure.Data
         }
 
         public DbSet<JogoModel> Jogos { get; set; }
-        public DbSet<AlteraStatusUserModel> User { get; set; }
     }
 }

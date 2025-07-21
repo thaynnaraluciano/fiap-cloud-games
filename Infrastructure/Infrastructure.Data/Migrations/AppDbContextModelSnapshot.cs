@@ -17,20 +17,6 @@ namespace Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
-            modelBuilder.Entity("Infrastructure.Data.Models.Adm.AlteraStatusUser.AlteraStatusUserModel", b =>
-                {
-                    b.Property<Guid>("cGuid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("bStatus")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("cGuid");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.Models.Jogos.JogoModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -53,7 +39,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jogos");
+                    b.ToTable("Jogos", (string)null);
                 });
 #pragma warning restore 612, 618
         }
