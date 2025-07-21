@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data.Models.Jogos;
+﻿using Infrastructure.Data.Models;
+using Infrastructure.Data.Models.Adm.AlteraStatusUser;
+using Infrastructure.Data.Models.Jogos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -8,7 +10,7 @@ namespace Infrastructure.Data
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
                 : base(options)
-    {
+        {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -16,5 +18,6 @@ namespace Infrastructure.Data
         }
 
         public DbSet<JogoModel> Jogos { get; set; }
+        public DbSet<AlteraStatusUserModel> User { get; set; }
     }
 }

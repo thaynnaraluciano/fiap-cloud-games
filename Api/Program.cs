@@ -1,6 +1,7 @@
 using Api.Utils;
 using CrossCutting.Configuration;
 using CrossCutting.Exceptions.Middlewares;
+using Domain.Commands.v1.Adm.AlteraStatusUser;
 using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogo;
 using Domain.Commands.v1.Jogos.BuscarTodosJogosCommand;
@@ -10,7 +11,10 @@ using Domain.Commands.v1.Login;
 using Domain.MapperProfiles;
 using FluentValidation;
 using Infrastructure.Data;
+using Infrastructure.Data.Interfaces.Adm;
 using Infrastructure.Data.Interfaces.Jogos;
+using Infrastructure.Data.Repositories;
+using Infrastructure.Data.Repositories.Adm;
 using Infrastructure.Data.Repositories.Jogos;
 using Infrastructure.Services.Interfaces.v1;
 using Infrastructure.Services.Services.v1;
@@ -56,10 +60,12 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverJogoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarJogosCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarJogoPorIdCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlteraUserStatusCommandHandler).Assembly));
 #endregion
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(JogoProfile));
+builder.Services.AddAutoMapper(typeof(AdmProfile));
 #endregion
 
 #region Validators
@@ -68,11 +74,15 @@ builder.Services.AddScoped<IValidator<CriarJogoCommand>, CriarJogoCommandValidat
 builder.Services.AddScoped<IValidator<AtualizarJogoCommand>, AtualizarJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<RemoverJogoCommand>, RemoverJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<BuscarJogoPorIdCommand>, BuscarJogoPorIdCommandValidator>();
+builder.Services.AddScoped<IValidator<AlteraUserStatusCommand>, AlteraUserStatusCommandValidator>();
 #endregion
 
+#region Interfaces
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
+builder.Services.AddScoped<IAdmRepository, AdmRepository>();
+#endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
