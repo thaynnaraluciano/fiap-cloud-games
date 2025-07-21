@@ -1,4 +1,4 @@
-﻿namespace Domain.Commands.v1.Jogos.ListarJogosCommand
+﻿namespace Domain.Commands.v1.Jogos.ListarJogos
 {
     public class ListarJogoCommandResponse
     {

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Domain.Commands.v1.Jogos.ListarJogosCommand;
 using Infrastructure.Data.Interfaces.Jogos;
-using Infrastructure.Data.Models.Jogos;
 using MediatR;
 
-namespace Domain.Commands.v1.Jogos.BuscarTodosJogosCommand
+namespace Domain.Commands.v1.Jogos.ListarJogos
 {
     public class ListarJogosCommandHandler : IRequestHandler<ListarJogosCommand, IEnumerable<ListarJogoCommandResponse>>
     {

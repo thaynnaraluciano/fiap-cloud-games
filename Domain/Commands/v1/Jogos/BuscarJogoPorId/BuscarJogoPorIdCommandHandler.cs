@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Domain.Commands.v1.Jogos.BuscarJogoPorId;
-using Domain.Commands.v1.Jogos.ListarJogosCommand;
 using Infrastructure.Data.Interfaces.Jogos;
 using MediatR;
 

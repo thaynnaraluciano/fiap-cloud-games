@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums
+﻿namespace Domain.Consts
 {
     public static class PerfilUsuario
     {

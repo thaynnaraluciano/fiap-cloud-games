@@ -1,5 +1,5 @@
 ﻿using CrossCutting.Exceptions;
-using Domain.Enums;
+using Domain.Consts;
 using Infrastructure.Services.Interfaces.v1;
 using MediatR;
 using Microsoft.Extensions.Logging;
