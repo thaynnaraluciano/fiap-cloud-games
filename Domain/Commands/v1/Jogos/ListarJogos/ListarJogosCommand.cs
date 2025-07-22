@@ -1,8 +1,6 @@
-﻿using Domain.Commands.v1.Jogos.ListarJogosCommand;
-using Infrastructure.Data.Models.Jogos;
-using MediatR;
+﻿using MediatR;
 
-namespace Domain.Commands.v1.Jogos.BuscarTodosJogosCommand
+namespace Domain.Commands.v1.Jogos.ListarJogos
 {
     public class ListarJogosCommand : IRequest<IEnumerable<ListarJogoCommandResponse>>
     {

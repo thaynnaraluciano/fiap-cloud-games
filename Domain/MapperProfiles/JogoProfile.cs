@@ -2,7 +2,7 @@
 using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogoPorId;
 using Domain.Commands.v1.Jogos.CriarJogo;
-using Domain.Commands.v1.Jogos.ListarJogosCommand;
+using Domain.Commands.v1.Jogos.ListarJogos;
 using Infrastructure.Data.Models.Jogos;
 
 namespace Domain.MapperProfiles
