@@ -20,18 +20,17 @@ namespace Infrastructure.Data.Repositories.Adm
         public async Task<bool> AlteraStatusUser(AlteraStatusUserModel userModel)
         {
             //TO DO: Alterar para os users já criados.
-            //var user = await _context.User.Where(x => x.cGuid == userModel.cGuid).FirstOrDefaultAsync();
-            var user = new AlteraStatusUserModel();
+            var user = await _context.Usuarios.Where(x => x.Id == userModel.cGuid).FirstOrDefaultAsync();
             if (user == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado");
             }
-            if (user.bStatus != userModel.bStatus)
+            if (user.Ativo != userModel.bStatus)
             {
-                user.bStatus = userModel.bStatus;
+                user.Ativo = userModel.bStatus;
                 await _context.SaveChangesAsync();
             }
-            return user.bStatus;
+            return user.Ativo;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jogos", (string)null);
+                    b.ToTable("Jogos");
                 });
 
             modelBuilder.Entity("Infrastructure.Data.Models.Usuarios.UsuarioModel", b =>
@@ -47,6 +47,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
