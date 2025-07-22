@@ -46,9 +46,9 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuario.Administrador.ToString()))
-    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuario.Usuario.ToString()))
-    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuario.Usuario.ToString(), PerfilUsuario.Administrador.ToString()));
+    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuarioEnum.Administrador.ToString()))
+    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString()))
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString(), PerfilUsuarioEnum.Administrador.ToString()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

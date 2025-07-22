@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum PerfilUsuario
+    public enum PerfilUsuarioEnum
     {
         Administrador,
         Usuario

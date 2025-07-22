@@ -32,7 +32,7 @@ namespace Domain.Commands.v1.Login
             var user = new
             {
                 Senha = "senhaDoUsuario",
-                Perfil = PerfilUsuario.Usuario
+                Perfil = PerfilUsuarioEnum.Usuario
             };
 
             var hashSenha = _criptografiaService.HashSenha(command.Senha);
