@@ -8,7 +8,7 @@ using Domain.Commands.v1.Jogos.ListarJogos;
 using Domain.Commands.v1.Jogos.CriarJogo;
 using Domain.Commands.v1.Jogos.RemoverJogo;
 using Domain.Commands.v1.Login;
-using Domain.Consts;
+using Domain.Enums;
 using Domain.MapperProfiles;
 using FluentValidation;
 using Infrastructure.Data;
@@ -46,9 +46,9 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuario.Administrador))
-    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuario.Usuario))
-    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuario.Usuario, PerfilUsuario.Administrador));
+    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuario.Administrador.ToString()))
+    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuario.Usuario.ToString()))
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuario.Usuario.ToString(), PerfilUsuario.Administrador.ToString()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

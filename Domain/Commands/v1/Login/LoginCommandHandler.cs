@@ -1,5 +1,5 @@
 ﻿using CrossCutting.Exceptions;
-using Domain.Consts;
+using Domain.Enums;
 using Infrastructure.Services.Interfaces.v1;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -42,7 +42,7 @@ namespace Domain.Commands.v1.Login
 
             _logger.LogInformation($"Gerando token jwt para {command.Email}");
 
-            var token = _tokenService.GerarToken(command.Email!, user.Perfil);
+            var token = _tokenService.GerarToken(command.Email!, user.Perfil.ToString());
 
             _logger.LogInformation("Usuário logado com sucesso");
 
