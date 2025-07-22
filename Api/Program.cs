@@ -1,12 +1,14 @@
 using Api.Utils;
 using CrossCutting.Configuration;
+using CrossCutting.Configuration.Authorization;
 using CrossCutting.Exceptions.Middlewares;
 using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogo;
-using Domain.Commands.v1.Jogos.BuscarTodosJogosCommand;
+using Domain.Commands.v1.Jogos.ListarJogos;
 using Domain.Commands.v1.Jogos.CriarJogo;
 using Domain.Commands.v1.Jogos.RemoverJogo;
 using Domain.Commands.v1.Login;
+using Domain.Enums;
 using Domain.MapperProfiles;
 using FluentValidation;
 using Infrastructure.Data;
@@ -17,7 +19,6 @@ using Infrastructure.Services.Services.v1;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Text;
 using Domain.Commands.v1.Usuarios.ListarUsuarios;
 using Domain.Commands.v1.Usuarios.CriarUsuario;
@@ -45,14 +46,40 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("PoliticaDeAdmin", policy =>
-        policy.RequireRole("Administrador"))
-    .AddPolicy("PoliticaDeUsuario", policy =>
-        policy.RequireRole("Usuario"));
+    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuarioEnum.Administrador.ToString()))
+    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString()))
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString(), PerfilUsuarioEnum.Administrador.ToString()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new()
+    {
+        Description = "Insira apenas o token JWT abaixo.",
+        Name = "Authorization",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+
+    c.AddSecurityRequirement(new()
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
@@ -84,6 +111,7 @@ builder.Services.AddScoped<IValidator<CriarJogoCommand>, CriarJogoCommandValidat
 builder.Services.AddScoped<IValidator<AtualizarJogoCommand>, AtualizarJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<RemoverJogoCommand>, RemoverJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<BuscarJogoPorIdCommand>, BuscarJogoPorIdCommandValidator>();
+builder.Services.AddScoped<IValidator<ListarJogosCommand>, ListarJogosCommandValidator>();
 
 builder.Services.AddScoped<IValidator<CriarUsuarioCommand>, CriarUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<AtualizarUsuarioCommand>, AtualizarUsuarioCommandValidator>();
@@ -98,10 +126,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
-// TO DO: configs de banco
 builder.Services.AddDbContext<AppDbContext>(options =>options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

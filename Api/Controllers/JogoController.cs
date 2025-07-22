@@ -1,11 +1,11 @@
-﻿using Domain.Commands.v1.Jogos.AtualizarJogo;
+﻿using CrossCutting.Configuration.Authorization;
+using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogo;
-using Domain.Commands.v1.Jogos.BuscarTodosJogosCommand;
+using Domain.Commands.v1.Jogos.ListarJogos;
 using Domain.Commands.v1.Jogos.CriarJogo;
 using Domain.Commands.v1.Jogos.RemoverJogo;
-using Infrastructure.Data.Interfaces.Jogos;
-using Infrastructure.Data.Models.Jogos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -22,6 +22,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = PoliticasDeAcesso.Usuario)]
         public async Task<IActionResult> BuscarTodos()
         {
             var query = new ListarJogosCommand();
@@ -31,6 +32,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = PoliticasDeAcesso.Usuario)]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
             var query = new BuscarJogoPorIdCommand(id);
@@ -39,12 +41,14 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = PoliticasDeAcesso.Admin)]
         public async Task<IActionResult> Criar([FromBody] CriarJogoCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = PoliticasDeAcesso.Admin)]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarJogoCommand command)
         {
             if (id != command.Id)
@@ -55,6 +59,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = PoliticasDeAcesso.Admin)]
         public async Task<ActionResult> Remover(Guid id)
         {
             var command = new RemoverJogoCommand(id);
