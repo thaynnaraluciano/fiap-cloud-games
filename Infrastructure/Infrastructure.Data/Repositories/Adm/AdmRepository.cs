@@ -19,7 +19,6 @@ namespace Infrastructure.Data.Repositories.Adm
         }
         public async Task<bool> AlteraStatusUser(AlteraStatusUserModel userModel)
         {
-            //TO DO: Alterar para os users já criados.
             var user = await _context.Usuarios.Where(x => x.Id == userModel.cGuid).FirstOrDefaultAsync();
             if (user == null)
             {
