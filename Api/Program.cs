@@ -31,6 +31,7 @@ using Domain.Commands.v1.Usuarios.AtualizarUsuario;
 using Domain.Commands.v1.Usuarios.RemoverUsuario;
 using Infrastructure.Data.Interfaces.Usuarios;
 using Infrastructure.Data.Repositories.Usuarios;
+using CrossCutting.Configuration.Extensoes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,9 +51,9 @@ builder.Services
     });
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuarioEnum.Administrador.ToString()))
-    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString()))
-    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ToString(), PerfilUsuarioEnum.Administrador.ToString()));
+    .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuarioEnum.Administrador.ObterDescricao()))
+    .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ObterDescricao()))
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ObterDescricao(), PerfilUsuarioEnum.Administrador.ObterDescricao()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
