@@ -2,6 +2,7 @@ using Api.Utils;
 using CrossCutting.Configuration;
 using CrossCutting.Configuration.Authorization;
 using CrossCutting.Exceptions.Middlewares;
+using Domain.Commands.v1.Adm.AlteraStatusUser;
 using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogo;
 using Domain.Commands.v1.Jogos.ListarJogos;
@@ -12,7 +13,10 @@ using Domain.Enums;
 using Domain.MapperProfiles;
 using FluentValidation;
 using Infrastructure.Data;
+using Infrastructure.Data.Interfaces.Adm;
 using Infrastructure.Data.Interfaces.Jogos;
+using Infrastructure.Data.Repositories;
+using Infrastructure.Data.Repositories.Adm;
 using Infrastructure.Data.Repositories.Jogos;
 using Infrastructure.Services.Interfaces.v1;
 using Infrastructure.Services.Services.v1;
@@ -85,7 +89,6 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 
 #region MediatR
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(LoginCommandHandler).Assembly));
-
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CriarJogoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AtualizarJogoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverJogoCommandHandler).Assembly));
@@ -97,20 +100,22 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverUsuarioCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarUsuariosCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarUsuarioPorIdCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlteraUserStatusCommandHandler).Assembly));
 #endregion
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(JogoProfile));
 builder.Services.AddAutoMapper(typeof(UsuarioProfile));
+builder.Services.AddAutoMapper(typeof(AdmProfile));
 #endregion
 
 #region Validators
 builder.Services.AddScoped<IValidator<LoginCommand>, LoginCommandValidator>();
-
 builder.Services.AddScoped<IValidator<CriarJogoCommand>, CriarJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<AtualizarJogoCommand>, AtualizarJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<RemoverJogoCommand>, RemoverJogoCommandValidator>();
 builder.Services.AddScoped<IValidator<BuscarJogoPorIdCommand>, BuscarJogoPorIdCommandValidator>();
+builder.Services.AddScoped<IValidator<AlteraUserStatusCommand>, AlteraUserStatusCommandValidator>();
 builder.Services.AddScoped<IValidator<ListarJogosCommand>, ListarJogosCommandValidator>();
 
 builder.Services.AddScoped<IValidator<CriarUsuarioCommand>, CriarUsuarioCommandValidator>();
@@ -119,10 +124,13 @@ builder.Services.AddScoped<IValidator<RemoverUsuarioCommand>, RemoverUsuarioComm
 builder.Services.AddScoped<IValidator<BuscarUsuarioPorIdCommand>, BuscarUsuarioPorIdCommandValidator>();
 #endregion
 
+#region Interfaces
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IAdmRepository, AdmRepository>();
+#endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 

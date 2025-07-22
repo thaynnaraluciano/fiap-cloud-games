@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data.Models.Jogos;
+﻿using Infrastructure.Data.Models;
+using Infrastructure.Data.Models.Adm.AlteraStatusUser;
+using Infrastructure.Data.Models.Jogos;
 using Infrastructure.Data.Models.Usuarios;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +11,7 @@ namespace Infrastructure.Data
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
                 : base(options)
-    {
+        {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
