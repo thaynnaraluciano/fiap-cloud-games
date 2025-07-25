@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Models.Jogos
+﻿using Infrastructure.Data.Models.Promocao;
+
+namespace Infrastructure.Data.Models.Jogos
 {
     public class JogoModel
     {
@@ -7,6 +9,8 @@
         public string Descricao { get; private set; }
         public decimal Preco { get; private set; }
         public DateTime DataLancamento { get; private set; }
+
+        public ICollection<PromocaoJogoModel> PromocaoJogos { get; private set; } = new List<PromocaoJogoModel>();
 
         public JogoModel() { }
 
