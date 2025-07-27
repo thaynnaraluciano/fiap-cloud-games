@@ -19,3 +19,7 @@
 /Tests/obj
 *.db-shm
 *.db-wal
+/Tests/CommonTestUtilities/bin/Debug/net8.0
+/Tests/CommonTestUtilities/obj
+/Tests/Validators.Tests/bin/Debug/net8.0
+/Tests/Validators.Tests/obj
