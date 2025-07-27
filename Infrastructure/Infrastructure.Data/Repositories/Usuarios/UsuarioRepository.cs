@@ -31,6 +31,14 @@ namespace Infrastructure.Data.Repositories.Usuarios
             return await _context.Usuarios.FindAsync(id);
         }
 
+        public UsuarioModel? ObterPorEmailAsync(string email)
+        {
+            if (email != null)
+                return _context.Usuarios.FirstOrDefault(x => string.Equals(x.Email, email));
+
+            return null;
+        }
+
         public async Task<IEnumerable<UsuarioModel>> ObterTodosAsync()
         {
             return await _context.Usuarios.ToListAsync();
