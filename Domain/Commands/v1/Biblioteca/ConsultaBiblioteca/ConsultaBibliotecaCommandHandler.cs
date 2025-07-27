@@ -6,6 +6,7 @@ using Infrastructure.Data.Models.Adm.AlteraStatusUser;
 using Infrastructure.Data.Models.Biblioteca;
 using Infrastructure.Data.Models.Jogos;
 using Infrastructure.Data.Repositories.Adm;
+using Infrastructure.Data.Repositories.Biblioteca;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,20 +18,19 @@ namespace Domain.Commands.v1.Biblioteca.ConsultaBiblioteca
 {
     public class ConsultaBibliotecaCommandHandler : IRequestHandler<ConsultaBibliotecaCommand, IEnumerable<ConsultaBibliotecaCommandResponse>>
     {
-        private readonly IBibliotecaRepository _biliotecaRepository;
+        private readonly IBibliotecaRepository _bibliotecaRepository;
         private readonly IMapper _mapper;
 
-        public ConsultaBibliotecaCommandHandler(IBibliotecaRepository biliotecaRepository, IMapper mapper)
+        public ConsultaBibliotecaCommandHandler(IBibliotecaRepository bibliotecaRepository, IMapper mapper)
         {
-            _biliotecaRepository = biliotecaRepository;
+            _bibliotecaRepository = bibliotecaRepository;
             _mapper = mapper;
-
         }
 
         public async Task<IEnumerable<ConsultaBibliotecaCommandResponse>> Handle(ConsultaBibliotecaCommand request, CancellationToken cancellationToken)
         {
             var bibliotecaPesquisa = _mapper.Map<BibliotecaModel>(request);
-            var jogosBiblioteca = await _biliotecaRepository.BuscaBibliotecaUser(bibliotecaPesquisa);
+            var jogosBiblioteca = await _bibliotecaRepository.BuscaBibliotecaUser(bibliotecaPesquisa);
             return _mapper.Map<IEnumerable<ConsultaBibliotecaCommandResponse>>(jogosBiblioteca);
         }
     }

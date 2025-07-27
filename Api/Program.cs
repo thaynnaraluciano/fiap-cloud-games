@@ -35,6 +35,7 @@ using CrossCutting.Configuration.Extensoes;
 using Domain.Commands.v1.Biblioteca.ConsultaBiblioteca;
 using Infrastructure.Data.Interfaces.Biblioteca;
 using Infrastructure.Data.Repositories.Biblioteca;
+using Domain.Commands.v1.Biblioteca.ComprarJogo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +108,7 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlteraUserStatusCommandHandler).Assembly));
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ConsultaBibliotecaCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ComprarJogoCommandHandler).Assembly));
 
 #endregion
 
@@ -132,6 +134,7 @@ builder.Services.AddScoped<IValidator<RemoverUsuarioCommand>, RemoverUsuarioComm
 builder.Services.AddScoped<IValidator<BuscarUsuarioPorIdCommand>, BuscarUsuarioPorIdCommandValidator>();
 
 builder.Services.AddScoped<IValidator<ConsultaBibliotecaCommand>, ConsultaBibliotecaCommandValidator>();
+builder.Services.AddScoped<IValidator<ComprarJogoCommand>, ComprarJogoCommandValidator>();
 #endregion
 
 #region Interfaces
@@ -145,7 +148,7 @@ builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
-builder.Services.AddDbContext<AppDbContext>(options =>options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

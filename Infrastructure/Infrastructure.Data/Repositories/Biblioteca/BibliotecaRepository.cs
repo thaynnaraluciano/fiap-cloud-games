@@ -2,11 +2,6 @@
 using Infrastructure.Data.Models.Biblioteca;
 using Infrastructure.Data.Models.Jogos;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories.Biblioteca
 {
@@ -27,6 +22,26 @@ namespace Infrastructure.Data.Repositories.Biblioteca
                 (jog, bli) => jog
             )
             .ToListAsync(); 
+        }
+
+        public async Task<ResultadoCompraModel> ComprarJogo(BibliotecaModel compra)
+        {
+            var jaPossui = await _context.Biblioteca
+        .AnyAsync(b => b.IdUsuario == compra.IdUsuario && b.IdJogo == compra.IdJogo);
+
+            if (jaPossui)
+                return new ResultadoCompraModel { Sucesso = false, Mensagem = "Usuário já possui esse jogo." };
+
+            try
+            {
+                _context.Biblioteca.Add(compra);
+                await _context.SaveChangesAsync();
+                return new ResultadoCompraModel { Sucesso = true, Mensagem = "Compra realizada com sucesso." };
+            }
+            catch (Exception ex)
+            {
+                return new ResultadoCompraModel { Sucesso = false, Mensagem = $"Erro ao comprar: {ex.Message}" };
+            }
         }
     }
 }

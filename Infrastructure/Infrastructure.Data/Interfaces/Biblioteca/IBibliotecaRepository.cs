@@ -11,5 +11,6 @@ namespace Infrastructure.Data.Interfaces.Biblioteca
     public interface IBibliotecaRepository
     {
         Task<IEnumerable<JogoModel>> BuscaBibliotecaUser(BibliotecaModel model);
+        Task<ResultadoCompraModel> ComprarJogo(BibliotecaModel compra);
     }
 }
