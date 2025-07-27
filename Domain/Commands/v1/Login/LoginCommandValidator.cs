@@ -7,10 +7,11 @@ namespace Domain.Commands.v1.Login
         public LoginCommandValidator()
         {
             RuleFor(usuario => usuario.Email)
-                .NotEmpty().WithMessage("O email deve ser informado");
+                .NotNull().NotEmpty().WithMessage("O email deve ser informado")
+                .EmailAddress().WithMessage("O email deve possuir um formato válido, example@example.com");
 
             RuleFor(usuario => usuario.Senha)
-                .NotEmpty().WithMessage("A senha deve ser informada");
+                .NotNull().NotEmpty().WithMessage("A senha deve ser informada");
         }
     }
 }
