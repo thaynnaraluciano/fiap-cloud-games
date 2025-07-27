@@ -1,4 +1,4 @@
-using CommonTestUtilities.Commands;
+using CommonTestUtilities.Commands.Login;
 using Domain.Commands.v1.Login;
 using FluentAssertions;
 
@@ -56,7 +56,7 @@ namespace Validators.Tests.v1.Login
             var result = _validator.Validate(request);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.ErrorMessage.Equals("O email deve possuir um formato válido, example@example.com"));
+            result.Errors.Should().Contain(e => e.ErrorMessage.Equals("O email deve possuir um formato vï¿½lido, example@example.com"));
         }
 
         [Fact]
