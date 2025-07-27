@@ -32,6 +32,9 @@ using Domain.Commands.v1.Usuarios.RemoverUsuario;
 using Infrastructure.Data.Interfaces.Usuarios;
 using Infrastructure.Data.Repositories.Usuarios;
 using CrossCutting.Configuration.Extensoes;
+using Domain.Commands.v1.Biblioteca.ConsultaBiblioteca;
+using Infrastructure.Data.Interfaces.Biblioteca;
+using Infrastructure.Data.Repositories.Biblioteca;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,12 +105,16 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarUsuariosCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarUsuarioPorIdCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlteraUserStatusCommandHandler).Assembly));
+
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ConsultaBibliotecaCommandHandler).Assembly));
+
 #endregion
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(JogoProfile));
 builder.Services.AddAutoMapper(typeof(UsuarioProfile));
 builder.Services.AddAutoMapper(typeof(AdmProfile));
+builder.Services.AddAutoMapper(typeof(BibliotecaProfile));
 #endregion
 
 #region Validators
@@ -123,6 +130,8 @@ builder.Services.AddScoped<IValidator<CriarUsuarioCommand>, CriarUsuarioCommandV
 builder.Services.AddScoped<IValidator<AtualizarUsuarioCommand>, AtualizarUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<RemoverUsuarioCommand>, RemoverUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<BuscarUsuarioPorIdCommand>, BuscarUsuarioPorIdCommandValidator>();
+
+builder.Services.AddScoped<IValidator<ConsultaBibliotecaCommand>, ConsultaBibliotecaCommandValidator>();
 #endregion
 
 #region Interfaces
@@ -131,6 +140,7 @@ builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IAdmRepository, AdmRepository>();
+builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 #endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
