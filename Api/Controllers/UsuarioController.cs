@@ -36,7 +36,6 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = PoliticasDeAcesso.Usuario)]
         [ProducesResponseType(typeof(CriarUsuarioCommandResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
