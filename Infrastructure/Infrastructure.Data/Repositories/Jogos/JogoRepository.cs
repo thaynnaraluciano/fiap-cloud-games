@@ -26,6 +26,13 @@ namespace Infrastructure.Data.Repositories.Jogos
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<JogoModel>> BuscarPorIdsAsync(List<Guid> ids)
+        {
+            return await _context.Jogos
+                .Where(j => ids.Contains(j.Id))
+                .ToListAsync();
+        }
+
         public async Task<JogoModel> ObterPorIdAsync(Guid id)
         {
             return await _context.Jogos.FindAsync(id);

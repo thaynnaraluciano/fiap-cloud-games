@@ -9,5 +9,6 @@ namespace Infrastructure.Data.Interfaces.Jogos
         Task AdicionarAsync(JogoModel jogo);
         Task AtualizarAsync(JogoModel jogo);
         Task RemoverAsync(JogoModel jogo);
+        Task<List<JogoModel>> BuscarPorIdsAsync(List<Guid> ids);
     }
 }

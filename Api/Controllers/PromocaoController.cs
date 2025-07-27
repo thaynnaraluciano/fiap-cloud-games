@@ -1,75 +1,81 @@
 ﻿using CrossCutting.Configuration.Authorization;
-using Domain.Commands.v1.Jogos.AtualizarJogo;
-using Domain.Commands.v1.Jogos.BuscarJogo;
-using Domain.Commands.v1.Jogos.ListarJogos;
-using Domain.Commands.v1.Jogos.CriarJogo;
-using Domain.Commands.v1.Jogos.RemoverJogo;
+using Domain.Commands.v1.Promocoes.AtualizarPromocao;
+using Domain.Commands.v1.Promocoes.BuscarPromocaoPorId;
+using Domain.Commands.v1.Promocoes.CriarPromocao;
+using Domain.Commands.v1.Promocoes.ListarPromocoes;
+using Domain.Commands.v1.Promocoes.RemoverPromocao;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Commands.v1.Jogos.BuscarJogoPorId;
 
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/jogo")]
-    public class JogoController : ControllerBase
+    [Route("api/v1/promocao")]
+    public class PromocaoController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private IMediator _mediator;
 
-        public JogoController(IMediator mediator)
+        public PromocaoController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        [Authorize(Policy = PoliticasDeAcesso.Usuario)]
-        [ProducesResponseType(typeof(IEnumerable<ListarJogoCommandResponse>), StatusCodes.Status200OK)]
+        [Authorize(Policy = PoliticasDeAcesso.Admin)]
+        [ProducesResponseType(typeof(IEnumerable<ListarPromocoesCommandResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> BuscarTodos()
+        public async Task<IActionResult> ListarTodos()
         {
-            var query = new ListarJogosCommand();
-            var jogos = await _mediator.Send(query);
-
-            return Ok(jogos);
+            var query = new ListarPromocoesCommand();
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = PoliticasDeAcesso.Usuario)]
-        [ProducesResponseType(typeof(BuscarJogoPorIdCommandResponse), StatusCodes.Status200OK)]
+        [Authorize(Policy = PoliticasDeAcesso.Admin)]
+        [ProducesResponseType(typeof(BuscarPromocaoPorIdCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
-            var query = new BuscarJogoPorIdCommand(id);
-            var jogo = await _mediator.Send(query);
-            return Ok(jogo);
+            var promocao = new BuscarPromocaoPorIdCommand(id);
+            var resultado = await _mediator.Send(promocao);
+
+            if (resultado == null)
+                return NotFound();
+
+            return Ok(resultado);
         }
 
         [HttpPost]
         [Authorize(Policy = PoliticasDeAcesso.Admin)]
-        [ProducesResponseType(typeof(CriarJogoCommandResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(CriarPromocaoCommandResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Criar([FromBody] CriarJogoCommand command)
+        public async Task<IActionResult> Criar([FromBody] CriarPromocaoCommand command)
         {
             var resultado = await _mediator.Send(command);
+
+            if (resultado == null)
+                return BadRequest();
+
             return Created(string.Empty, resultado);
         }
 
         [HttpPut("{id}")]
         [Authorize(Policy = PoliticasDeAcesso.Admin)]
-        [ProducesResponseType(typeof(AtualizarJogoCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AtualizarPromocaoCommandResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarJogoCommand command)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarPromocaoCommand command)
         {
             if (id != command.Id)
-                return BadRequest("ID do corpo e da URL não coincidem.");
+                return BadRequest("ID da URL não confere com o corpo da requisição.");
 
             return Ok(await _mediator.Send(command));
         }
@@ -81,11 +87,11 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Remover(Guid id)
+        public async Task<ActionResult> Remover(Guid id)
         {
-            var command = new RemoverJogoCommand(id);
+            var command = new RemoverPromocaoCommand(id);
             await _mediator.Send(command);
-            return NoContent(); 
+            return NoContent();
         }
     }
 }
