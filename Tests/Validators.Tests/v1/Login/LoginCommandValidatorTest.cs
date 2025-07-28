@@ -56,7 +56,7 @@ namespace Validators.Tests.v1.Login
             var result = _validator.Validate(request);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.ErrorMessage.Equals("O email deve possuir um formato v�lido, example@example.com"));
+            result.Errors.Should().Contain(e => e.ErrorMessage.Equals("O email deve possuir um formato válido, example@example.com"));
         }
 
         [Fact]
