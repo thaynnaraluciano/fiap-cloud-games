@@ -11,9 +11,9 @@ namespace Validators.Tests.v1.Adm
         [Fact]
         public void Deve_passar_quando_comando_for_valido()
         {
-            var command = AlteraUserStatusCommandBuilder.Build();
+            var request = AlteraUserStatusCommandBuilder.Build();
 
-            var result = _validator.Validate(command);
+            var result = _validator.Validate(request);
 
             result.IsValid.Should().BeTrue();
         }
@@ -21,13 +21,13 @@ namespace Validators.Tests.v1.Adm
         [Fact]
         public void Deve_falhar_quando_cGuid_for_vazio()
         {
-            var command = new AlteraUserStatusCommand
+            var request = new AlteraUserStatusCommand
             {
                 cGuid = Guid.Empty,
                 bStatus = true
             };
 
-            var result = _validator.Validate(command);
+            var result = _validator.Validate(request);
 
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>

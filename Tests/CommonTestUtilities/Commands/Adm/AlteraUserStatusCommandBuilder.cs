@@ -1,4 +1,5 @@
-﻿using Domain.Commands.v1.Adm.AlteraStatusUser;
+﻿using Bogus;
+using Domain.Commands.v1.Adm.AlteraStatusUser;
 
 namespace CommonTestUtilities.Commands.Adm
 {
@@ -6,11 +7,9 @@ namespace CommonTestUtilities.Commands.Adm
     {
         public static AlteraUserStatusCommand Build()
         {
-            return new AlteraUserStatusCommand
-            {
-                cGuid = Guid.NewGuid(),
-                bStatus = true
-            };
+            return new Faker<AlteraUserStatusCommand>()
+                .RuleFor(c => c.cGuid, f => Guid.NewGuid())
+                .RuleFor(c => c.bStatus, f => f.Random.Bool());
         }
     }
 }
