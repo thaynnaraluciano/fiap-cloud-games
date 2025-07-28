@@ -1,10 +1,4 @@
-﻿using Domain.Commands.v1.Jogos.BuscarJogo;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace Domain.Commands.v1.Adm.AlteraStatusUser
 {
