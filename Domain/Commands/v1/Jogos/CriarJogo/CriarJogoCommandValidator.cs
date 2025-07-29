@@ -18,7 +18,7 @@ namespace Domain.Commands.v1.Jogos.CriarJogo
                 .GreaterThan(0).WithMessage("O preço do jogo deve ser maior que zero.");
 
             RuleFor(command => command.DataLancamento)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("A data de lançamento não pode ser no futuro.");   
+                .GreaterThanOrEqualTo(DateTime.Now).WithMessage("A data de lançamento não pode ser no passado.");
         }
     }
 }

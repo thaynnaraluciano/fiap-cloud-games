@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using Infrastructure.Data.Interfaces.Adm;
-using Infrastructure.Data.Interfaces.Jogos;
 using Infrastructure.Data.Models.Adm.AlteraStatusUser;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Commands.v1.Adm.AlteraStatusUser
 {
