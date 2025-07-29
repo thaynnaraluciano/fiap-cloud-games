@@ -2,7 +2,7 @@
 using Infrastructure.Data.Interfaces.Usuarios;
 using MediatR;
 
-namespace Domain.Commands.v1.Usuarios.ListarUsuarios
+namespace Domain.Commands.v1.Adm.ListarUsuarios
 {
     public class ListarUsuariosCommandHandler : IRequestHandler<ListarUsuariosCommand, IEnumerable<ListarUsuariosCommandResponse>>
     {

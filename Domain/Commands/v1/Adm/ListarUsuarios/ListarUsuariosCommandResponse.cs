@@ -1,12 +1,13 @@
-﻿using MediatR;
-
-namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
+﻿namespace Domain.Commands.v1.Adm.ListarUsuarios
 {
-    public class AtualizarUsuarioCommand : IRequest<AtualizarUsuarioCommandResponse>
+    public class ListarUsuariosCommandResponse
     {
         public Guid Id { get; set; }
+
         public string? Nome { get; set; }
+
         public string? Email { get; set; }
+
         public int PerfilUsuario { get; set; }
     }
 }

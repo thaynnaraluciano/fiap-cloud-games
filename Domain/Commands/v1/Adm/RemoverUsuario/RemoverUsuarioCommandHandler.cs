@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Data.Interfaces.Usuarios;
 using MediatR;
 
-namespace Domain.Commands.v1.Usuarios.RemoverUsuario
+namespace Domain.Commands.v1.Adm.RemoverUsuario
 {
     public class RemoverUsuarioCommandHandler : IRequestHandler<RemoverUsuarioCommand, Unit>
     {
@@ -16,7 +16,7 @@ namespace Domain.Commands.v1.Usuarios.RemoverUsuario
         {
             var usuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
 
-            if (usuario == null) 
+            if (usuario == null)
             {
                 throw new KeyNotFoundException($"Usuario com ID {request.Id} não encontrado.");
             }

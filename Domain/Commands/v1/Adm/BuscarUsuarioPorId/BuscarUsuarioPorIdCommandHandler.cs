@@ -2,7 +2,7 @@
 using Infrastructure.Data.Interfaces.Usuarios;
 using MediatR;
 
-namespace Domain.Commands.v1.Usuarios.BuscarUsuarioPorId
+namespace Domain.Commands.v1.Adm.BuscarUsuarioPorId
 {
     public class BuscarUsuarioPorIdCommandHandler : IRequestHandler<BuscarUsuarioPorIdCommand, BuscarUsuarioPorIdCommandResponse>
     {

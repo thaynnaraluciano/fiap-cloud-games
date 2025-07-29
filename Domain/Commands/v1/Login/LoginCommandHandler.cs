@@ -36,7 +36,7 @@ namespace Domain.Commands.v1.Login
             var hashSenha = _criptografiaService.HashSenha(command.Senha);
 
             // TO DO: adicionar campo "SENHA" ao objeto de usuário
-            if (user == null || !user.Ativo ) // || hashSenha != user.Senha)
+            if (user == null || !user.Ativo || hashSenha != user.Senha)
                 throw new ExcecaoNaoAutorizado("Não foi possível prosseguir com o login, verifique suas credenciais e se a conta está ativa.");
 
             _logger.LogInformation($"Gerando token jwt para {command.Email}");

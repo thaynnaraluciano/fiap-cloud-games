@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Domain.Commands.v1.Usuarios.RemoverUsuario
+namespace Domain.Commands.v1.Adm.RemoverUsuario
 {
     public class RemoverUsuarioCommand : IRequest<Unit>
     {

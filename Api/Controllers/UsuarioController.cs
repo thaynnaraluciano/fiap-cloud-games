@@ -1,12 +1,5 @@
-﻿using CrossCutting.Configuration.Authorization;
-using Domain.Commands.v1.Usuarios.AtualizarUsuario;
-using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
-using Domain.Commands.v1.Usuarios.CriarSenha;
+﻿using Domain.Commands.v1.Usuarios.CriarSenha;
 using Domain.Commands.v1.Usuarios.CriarUsuario;
-using Domain.Commands.v1.Usuarios.ListarUsuarios;
-using Domain.Commands.v1.Usuarios.RemoverUsuario;
-
-//using Domain.Commands.v1.Usuarios.RemoverUsuario;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +16,18 @@ namespace Api.Controllers
             _mediator = mediator;
         }
 
-        
+        [Route(template: "CriarUsuario")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return Created(string.Empty, response);
+        }
 
-        [Route(template: "CriarSenha/{email}")]
+        [Route(template: "CriarSenha")]
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

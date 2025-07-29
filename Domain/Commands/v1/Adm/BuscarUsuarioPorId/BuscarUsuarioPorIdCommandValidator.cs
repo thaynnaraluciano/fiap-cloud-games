@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Domain.Commands.v1.Usuarios.BuscarUsuarioPorId
+namespace Domain.Commands.v1.Adm.BuscarUsuarioPorId
 {
     public class BuscarUsuarioPorIdCommandValidator : AbstractValidator<BuscarUsuarioPorIdCommand>
     {

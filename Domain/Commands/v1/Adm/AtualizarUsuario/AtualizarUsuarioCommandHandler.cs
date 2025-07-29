@@ -2,7 +2,7 @@
 using Infrastructure.Data.Interfaces.Usuarios;
 using MediatR;
 
-namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
+namespace Domain.Commands.v1.Adm.AtualizarUsuario
 {
     public class AtualizarUsuarioCommandHandler : IRequestHandler<AtualizarUsuarioCommand, AtualizarUsuarioCommandResponse>
     {
@@ -24,7 +24,7 @@ namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
                 throw new Exception($"Usuário com ID {request.Id} não encontrado.");
             }
 
-            usuarioExistente.Atualizar(request.Nome, request.Email, request.PerfilUsuario);
+            usuarioExistente.Atualizar(request.Nome, request.Email, (int)request.PerfilUsuario);
 
             await _usuarioRepository.AtualizarAsync(usuarioExistente);
 
