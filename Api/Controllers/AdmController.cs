@@ -14,7 +14,7 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    //[Authorize(Policy = PoliticasDeAcesso.Admin)]
+    [Authorize(Policy = PoliticasDeAcesso.Admin)]
     public class AdmController : ControllerBase
     {
         private readonly IMediator _mediator;
