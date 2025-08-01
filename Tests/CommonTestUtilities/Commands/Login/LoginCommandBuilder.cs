@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Domain.Commands.v1.Login;
 
-namespace CommonTestUtilities.Commands
+namespace CommonTestUtilities.Commands.Login
 {
     public class LoginCommandBuilder
     {

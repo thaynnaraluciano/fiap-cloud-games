@@ -8,7 +8,6 @@ namespace Domain.Commands.v1.Promocoes.RemoverPromocao
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("O ID da promoção não pode ser vazio.")
-                .NotNull().WithMessage("O ID da promoção não pode ser nulo.")
                 .Must(id => id != Guid.Empty).WithMessage("O ID da promoção não pode ser um GUID vazio.");
         }
     }
