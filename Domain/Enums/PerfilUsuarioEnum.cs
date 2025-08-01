@@ -5,9 +5,9 @@ namespace Domain.Enums
     public enum PerfilUsuarioEnum
     {
         [Description("Administrador")]
-        Administrador,
+        Administrador = 1,
 
         [Description("Usuario")]
-        Usuario
+        Usuario = 2
     }
 }

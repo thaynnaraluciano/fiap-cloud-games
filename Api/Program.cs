@@ -2,7 +2,6 @@ using Api.Utils;
 using CrossCutting.Configuration;
 using CrossCutting.Configuration.Authorization;
 using CrossCutting.Exceptions.Middlewares;
-using Domain.Commands.v1.Adm.AlteraStatusUser;
 using Domain.Commands.v1.Jogos.AtualizarJogo;
 using Domain.Commands.v1.Jogos.BuscarJogo;
 using Domain.Commands.v1.Jogos.ListarJogos;
@@ -18,10 +17,7 @@ using Domain.Enums;
 using Domain.MapperProfiles;
 using FluentValidation;
 using Infrastructure.Data;
-using Infrastructure.Data.Interfaces.Adm;
 using Infrastructure.Data.Interfaces.Jogos;
-using Infrastructure.Data.Repositories;
-using Infrastructure.Data.Repositories.Adm;
 using Infrastructure.Data.Interfaces.Promocoes;
 using Infrastructure.Data.Repositories.Jogos;
 using Infrastructure.Data.Repositories.Promocoes;
@@ -31,14 +27,16 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Domain.Commands.v1.Usuarios.ListarUsuarios;
-using Domain.Commands.v1.Usuarios.CriarUsuario;
-using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
-using Domain.Commands.v1.Usuarios.AtualizarUsuario;
-using Domain.Commands.v1.Usuarios.RemoverUsuario;
 using Infrastructure.Data.Interfaces.Usuarios;
 using Infrastructure.Data.Repositories.Usuarios;
 using CrossCutting.Configuration.Extensoes;
+using Domain.Commands.v1.Usuarios.CriarUsuario;
+using Domain.Commands.v1.Usuarios.CriarSenha;
+using Domain.Commands.v1.Usuarios.ListarUsuarios;
+using Domain.Commands.v1.Usuarios.RemoverUsuario;
+using Domain.Commands.v1.Usuarios.AtualizarUsuario;
+using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
+using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,13 +102,14 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverJogoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarJogosCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarJogoPorIdCommandHandler).Assembly));
-
+//Usuarios
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CriarUsuarioCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AtualizarUsuarioCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverUsuarioCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarUsuariosCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarUsuarioPorIdCommandHandler).Assembly));
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlteraUserStatusCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AlterarStatusUsuarioCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CriarSenhaCommandHandler).Assembly));
 // Promoções
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CriarPromocaoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(AtualizarPromocaoCommandHandler).Assembly));
@@ -122,7 +121,6 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(JogoProfile));
 builder.Services.AddAutoMapper(typeof(UsuarioProfile));
-builder.Services.AddAutoMapper(typeof(AdmProfile));
 builder.Services.AddAutoMapper(typeof(PromocaoProfile));
 #endregion
 
@@ -146,7 +144,9 @@ builder.Services.AddScoped<IValidator<CriarUsuarioCommand>, CriarUsuarioCommandV
 builder.Services.AddScoped<IValidator<AtualizarUsuarioCommand>, AtualizarUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<RemoverUsuarioCommand>, RemoverUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<BuscarUsuarioPorIdCommand>, BuscarUsuarioPorIdCommandValidator>();
-builder.Services.AddScoped<IValidator<AlteraUserStatusCommand>, AlteraUserStatusCommandValidator>();
+builder.Services.AddScoped<IValidator<AlterarStatusUsuarioCommand>, AlterarStatusUsuarioCommandValidator>();
+builder.Services.AddScoped<IValidator<ListarUsuariosCommand>, ListarUsuariosCommandValidator>();
+builder.Services.AddScoped<IValidator<CriarSenhaCommand>, CriarSenhaCommandValidator>();
 #endregion
 
 #region Interfaces
@@ -154,9 +154,8 @@ builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IAdmRepository, AdmRepository>();
-#endregion
 builder.Services.AddScoped<IPromocaoRepository, PromocaoRepository>();
+#endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 

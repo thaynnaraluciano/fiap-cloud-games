@@ -16,7 +16,7 @@ namespace Domain.Commands.v1.Usuarios.RemoverUsuario
         {
             var usuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
 
-            if (usuario == null) 
+            if (usuario == null)
             {
                 throw new KeyNotFoundException($"Usuario com ID {request.Id} não encontrado.");
             }

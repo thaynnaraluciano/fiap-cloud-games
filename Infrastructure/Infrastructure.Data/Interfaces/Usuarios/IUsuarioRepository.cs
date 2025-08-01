@@ -9,6 +9,7 @@ namespace Infrastructure.Data.Interfaces.Usuarios
         Task AdicionarAsync(UsuarioModel usuario);
         Task AtualizarAsync(UsuarioModel usuario);
         Task RemoverAsync(UsuarioModel usuario);
-       UsuarioModel? ObterPorEmailAsync(string email);
+        UsuarioModel? ObterPorEmailAsync(string email);
+        Task<bool> AlterarStatusUsuario(UsuarioModel userModel);
     }
 }
