@@ -1,7 +1,7 @@
 ﻿using Domain.Enums;
 using MediatR;
 
-namespace Domain.Commands.v1.Adm.AtualizarUsuario
+namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
 {
     public class AtualizarUsuarioCommand : IRequest<AtualizarUsuarioCommandResponse>
     {

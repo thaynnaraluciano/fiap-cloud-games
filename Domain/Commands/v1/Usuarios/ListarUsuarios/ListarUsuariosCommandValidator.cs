@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Commands.v1.Adm.ListarUsuarios
+namespace Domain.Commands.v1.Usuarios.ListarUsuarios
 {
     public class ListarUsuariosCommandValidator : AbstractValidator<ListarUsuariosCommand>
     {

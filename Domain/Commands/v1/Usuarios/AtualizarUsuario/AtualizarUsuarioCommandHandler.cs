@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Infrastructure.Data.Interfaces.Usuarios;
+using Infrastructure.Data.Models.Usuarios;
 using MediatR;
+using System.Linq;
 
-namespace Domain.Commands.v1.Adm.AtualizarUsuario
+namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
 {
     public class AtualizarUsuarioCommandHandler : IRequestHandler<AtualizarUsuarioCommand, AtualizarUsuarioCommandResponse>
     {
@@ -17,18 +19,25 @@ namespace Domain.Commands.v1.Adm.AtualizarUsuario
 
         public async Task<AtualizarUsuarioCommandResponse> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
-            var usuarioExistente = await _usuarioRepository.ObterPorIdAsync(request.Id);
+            var usuarios = await _usuarioRepository.ObterTodosAsync();
 
-            if (usuarioExistente == null)
+            if (!usuarios.Any(x => x.Id == request.Id))
             {
                 throw new Exception($"Usuário com ID {request.Id} não encontrado.");
             }
 
-            usuarioExistente.Atualizar(request.Nome, request.Email, (int)request.PerfilUsuario);
+            if (usuarios.Any(x => x.Email == request.Email && x.Id != request.Id))
+            {
+                throw new Exception("Já existe um usuário criado para o e-mail fornecido");
+            }
 
-            await _usuarioRepository.AtualizarAsync(usuarioExistente);
+            var usuario = _mapper.Map<UsuarioModel>(request);
 
-            return _mapper.Map<AtualizarUsuarioCommandResponse>(usuarioExistente);
+            usuario.Atualizar(request.Nome, request.Email, (int)request.PerfilUsuario);
+
+            await _usuarioRepository.AtualizarAsync(usuario);
+
+            return _mapper.Map<AtualizarUsuarioCommandResponse>(usuario);
         }
     }
 }

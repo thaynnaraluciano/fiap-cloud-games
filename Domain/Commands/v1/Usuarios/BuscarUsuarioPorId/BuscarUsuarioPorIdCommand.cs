@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Domain.Commands.v1.Adm.BuscarUsuarioPorId
+namespace Domain.Commands.v1.Usuarios.BuscarUsuarioPorId
 {
     public class BuscarUsuarioPorIdCommand : IRequest<BuscarUsuarioPorIdCommandResponse>
     {

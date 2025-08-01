@@ -5,7 +5,6 @@
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Nome { get; private set; }
         public string Email { get; private set; }
-
         public int PerfilUsuario { get; set; }
         public bool Ativo { get; set; } = true;
         public string? Senha { get; set; }

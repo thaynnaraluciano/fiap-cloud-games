@@ -1,6 +1,6 @@
-﻿namespace Domain.Commands.v1.Adm.BuscarUsuarioPorId
+﻿namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
 {
-    public class BuscarUsuarioPorIdCommandResponse
+    public class AtualizarUsuarioCommandResponse
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }

@@ -1,11 +1,6 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.Commands.v1.Adm.AtualizarUsuario
+namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
 {
     public class AtualizarUsuarioCommandValidator : AbstractValidator<AtualizarUsuarioCommand>
     {
@@ -23,7 +18,7 @@ namespace Domain.Commands.v1.Adm.AtualizarUsuario
 
             RuleFor(command => (int)command.PerfilUsuario)
                 .NotEmpty().WithMessage("Necessário informar o perfil do usuário")
-                .ExclusiveBetween(1, 2).WithMessage("Tipo de usuário incorreto");
+                .LessThanOrEqualTo(2).WithMessage("Tipo de usuário incorreto");
         }
     }
 }
