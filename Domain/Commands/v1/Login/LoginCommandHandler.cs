@@ -35,7 +35,6 @@ namespace Domain.Commands.v1.Login
             var user = _usuarioRepository.ObterPorEmailAsync(command.Email!);
             var hashSenha = _criptografiaService.HashSenha(command.Senha);
 
-            // TO DO: adicionar campo "SENHA" ao objeto de usuário
             if (user == null || !user.Ativo || hashSenha != user.Senha)
                 throw new ExcecaoNaoAutorizado("Não foi possível prosseguir com o login, verifique suas credenciais e se a conta está ativa.");
 
