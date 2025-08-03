@@ -54,6 +54,8 @@ namespace Domain.Commands.v1.Notificacao.Email
             var token = _tokenService.GerarToken(command.EmailDestinatario!, "CriarSenha");
             command.Corpo = _emailTemplateService.GerarEmailDeConfirmacao(user.Nome!, token);
             command.TipoCorpo = "html";
+            command.NomeDestinatario = user.Nome;
+            command.Assunto = "Confirmação de Email";
 
             _logger.LogInformation($"Enviando email para {command.EmailDestinatario}");
 

@@ -9,6 +9,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
+using CrossCutting.Exceptions;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
@@ -41,6 +43,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CriarSenha([FromBody] CriarSenhaCommand command)
         {
+            var email = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (email != command.Email)
+                throw new ExcecaoBadRequest("Autenticação inválida para o email informado");
+
             var response = await _mediator.Send(command);
             return Created(string.Empty, response);
         }
