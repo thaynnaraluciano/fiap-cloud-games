@@ -23,7 +23,7 @@ namespace Infrastructure.Services.Services.v1
         {
             try
             {
-                _logger.LogInformation("Adding message configurations");
+                _logger.LogInformation("Adicionando configurações da mensagem");
 
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(_appSettings.Smtp.MailFromName, _appSettings.Smtp.MailFromEmail));
@@ -35,7 +35,7 @@ namespace Infrastructure.Services.Services.v1
                     Text = request.Corpo
                 };
 
-                _logger.LogInformation("Communicating with smtp client");
+                _logger.LogInformation("Comunicando com o client");
 
                 using var client = new SmtpClient();
                 await client.ConnectAsync(_appSettings.Smtp.Host, _appSettings.Smtp.Port, MailKit.Security.SecureSocketOptions.StartTls);
@@ -43,14 +43,14 @@ namespace Infrastructure.Services.Services.v1
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
-                _logger.LogInformation("Email successfully sent");
+                _logger.LogInformation("Email enviado com sucesso");
 
                 return;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error sending email: {ex.Message}");
-                throw new Exception($"Error sending email: {ex.Message}");
+                _logger.LogError($"Erro ao enviar email: {ex.Message}");
+                throw new Exception($"Erro ao enviar email: {ex.Message}");
             }
         }
     }

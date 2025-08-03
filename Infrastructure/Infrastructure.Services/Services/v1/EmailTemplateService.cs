@@ -18,7 +18,7 @@ namespace Infrastructure.Services.Services.v1
                         <td>
                             <div style=""margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; background-color: white;"">
                                 <h1 style=""font-size: 24px; color: #333;"">{receiverName},</h1>
-                                <p style=""font-size: 16px; color: #666;"">Confirme seu email utilizando o token abaixo:</p>
+                                <p style=""font-size: 16px; color: #666;"">Utilize o token abaixo para criar a senha:</p>
                                 <div style=""background-color: #007BFF; color: white; text-decoration: none; display: inline-block; padding: 10px 20px; font-size: 16px; border-radius: 5px; margin-top: 20px;"">{verificationCode}</div>
                             </div>
                             <div style=""font-size: 12px; color: #666; margin-top: 20px; text-align: center;"">

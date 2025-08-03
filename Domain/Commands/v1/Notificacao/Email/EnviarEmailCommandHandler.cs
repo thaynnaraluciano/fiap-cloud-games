@@ -35,32 +35,32 @@ namespace Domain.Commands.v1.Notificacao.Email
 
         public async Task<Unit> Handle(EnviarEmailCommand command, CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Confirming user email");
+            _logger.LogInformation($"Confirmando email do usuário {command.EmailDestinatario}");
 
             var user = _userRepository.ObterPorEmailAsync(command.EmailDestinatario!);
 
             if (user == null)
             {
-                _logger.LogError("User not found at database");
+                _logger.LogError("Usuário não encontrado");
                 throw new ExcecaoUsuarioNaoEncontrado("Usuário não encontrado.");
             }
 
             if (user.ConfirmadoEm.HasValue)
             {
-                _logger.LogError("User email is already confirmed");
-                throw new ExcecaoBadRequest("Este email já foi validado.");
+                _logger.LogError("O email já foi confirmado");
+                throw new ExcecaoBadRequest("Este email já foi confirmado.");
             }
 
             var token = _tokenService.GerarToken(command.EmailDestinatario!, "CriarSenha");
             command.Corpo = _emailTemplateService.GerarEmailDeConfirmacao(user.Nome!, token);
             command.TipoCorpo = "html";
 
-            _logger.LogInformation($"Sending email to {command.EmailDestinatario}");
+            _logger.LogInformation($"Enviando email para {command.EmailDestinatario}");
 
             var request = _mapper.Map<EmailModel>(command);
             await _emailService.EnviarEmail(request);
 
-            _logger.LogInformation($"Email sent to {command.EmailDestinatario}");
+            _logger.LogInformation($"Email enviado para {command.EmailDestinatario}");
             return Unit.Value;
         }
     }
