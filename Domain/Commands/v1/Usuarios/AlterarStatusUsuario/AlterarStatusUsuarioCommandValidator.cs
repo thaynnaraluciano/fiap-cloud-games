@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 
-namespace Domain.Commands.v1.Adm.AlteraStatusUser
+namespace Domain.Commands.v1.Usuarios.AlterarStatusUsuario
 {
-    public class AlteraUserStatusCommandValidator : AbstractValidator<AlteraUserStatusCommand>
+    public class AlterarStatusUsuarioCommandValidator : AbstractValidator<AlterarStatusUsuarioCommand>
     {
-        public AlteraUserStatusCommandValidator()
+        public AlterarStatusUsuarioCommandValidator()
         {
             RuleFor(command => command.bStatus)
                 .NotNull().WithMessage("O status não pode ser nulo.");
-            RuleFor(command=> command.cGuid)
+            RuleFor(command => command.cGuid)
                 .Must(id => id != Guid.Empty).WithMessage("O ID do user não pode ser vazio.");
         }
     }
