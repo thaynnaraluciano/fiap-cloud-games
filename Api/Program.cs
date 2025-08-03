@@ -37,6 +37,7 @@ using Domain.Commands.v1.Usuarios.RemoverUsuario;
 using Domain.Commands.v1.Usuarios.AtualizarUsuario;
 using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
 using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
+using Domain.Commands.v1.Notificacao.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,8 @@ builder.Services
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy(PoliticasDeAcesso.Admin, policy => policy.RequireRole(PerfilUsuarioEnum.Administrador.ObterDescricao()))
     .AddPolicy(PoliticasDeAcesso.SomenteUsuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ObterDescricao()))
-    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ObterDescricao(), PerfilUsuarioEnum.Administrador.ObterDescricao()));
+    .AddPolicy(PoliticasDeAcesso.Usuario, policy => policy.RequireRole(PerfilUsuarioEnum.Usuario.ObterDescricao(), PerfilUsuarioEnum.Administrador.ObterDescricao()))
+    .AddPolicy(PoliticasDeAcesso.CriarSenha, policy => policy.RequireRole("CriarSenha"));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -116,12 +118,15 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(RemoverPromocaoCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ListarPromocoesCommandHandler).Assembly));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarPromocaoPorIdCommandHandler).Assembly));
+// Notificação
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(EnviarEmailCommandHandler).Assembly));
 #endregion
 
 #region AutoMapper
 builder.Services.AddAutoMapper(typeof(JogoProfile));
 builder.Services.AddAutoMapper(typeof(UsuarioProfile));
 builder.Services.AddAutoMapper(typeof(PromocaoProfile));
+builder.Services.AddAutoMapper(typeof(EmailProfile));
 #endregion
 
 #region Validators
@@ -147,11 +152,15 @@ builder.Services.AddScoped<IValidator<BuscarUsuarioPorIdCommand>, BuscarUsuarioP
 builder.Services.AddScoped<IValidator<AlterarStatusUsuarioCommand>, AlterarStatusUsuarioCommandValidator>();
 builder.Services.AddScoped<IValidator<ListarUsuariosCommand>, ListarUsuariosCommandValidator>();
 builder.Services.AddScoped<IValidator<CriarSenhaCommand>, CriarSenhaCommandValidator>();
+// Notificação
+builder.Services.AddScoped<IValidator<EnviarEmailCommand>, EnviarEmailCommandValidator>();
 #endregion
 
 #region Interfaces
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
+builder.Services.AddSingleton<IEmailTemplateService, EmailTemplateService>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPromocaoRepository, PromocaoRepository>();

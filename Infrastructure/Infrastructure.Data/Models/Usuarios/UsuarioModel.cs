@@ -8,6 +8,8 @@
         public int PerfilUsuario { get; set; }
         public bool Ativo { get; set; } = true;
         public string? Senha { get; set; }
+        public DateTime? ConfirmadoEm { get; set; }
+
         public UsuarioModel() { }
 
         public UsuarioModel(string nome, string email, int perfilUsuario)
