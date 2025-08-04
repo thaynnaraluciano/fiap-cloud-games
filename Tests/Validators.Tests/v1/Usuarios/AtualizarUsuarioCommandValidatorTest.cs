@@ -1,5 +1,6 @@
 ﻿using CommonTestUtilities.Commands.Usuarios;
 using Domain.Commands.v1.Usuarios.AtualizarUsuario;
+using Domain.Enums;
 using FluentAssertions;
 
 namespace Validators.Tests.v1.Usuarios
@@ -68,7 +69,7 @@ namespace Validators.Tests.v1.Usuarios
         public void Deve_falhar_quando_PerfilUsuario_for_invalido(int perfilInvalido)
         {
             var request = AtualizarUsuarioCommandBuilder.Build();
-            request.PerfilUsuario = perfilInvalido;
+            request.PerfilUsuario = (PerfilUsuarioEnum)perfilInvalido;
 
             var result = _validator.Validate(request);
 

@@ -10,8 +10,8 @@ namespace CommonTestUtilities.Commands.Usuarios
             return new Faker<AtualizarUsuarioCommand>()
             .RuleFor(c => c.Id, _ => Guid.NewGuid())
             .RuleFor(c => c.Nome, f => f.Name.FullName())
-            .RuleFor(c => c.Email, f => f.Internet.Email())
-            .RuleFor(c => c.PerfilUsuario, f => f.PickRandom(1, 2));
+            .RuleFor(c => c.Email, f => f.Internet.Email());
+            // .RuleFor(c => c.PerfilUsuario, f => f.Enum); // TO DO: AJUSTAR!
         }
     }
 }

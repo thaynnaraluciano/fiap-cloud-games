@@ -1,12 +1,12 @@
-﻿using CommonTestUtilities.Commands.Adm;
-using Domain.Commands.v1.Adm.AlteraStatusUser;
+﻿using CommonTestUtilities.Commands.Usuarios;
+using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
 using FluentAssertions;
 
-namespace Validators.Tests.v1.Adm
+namespace Validators.Tests.v1.Usuarios
 {
     public class AlteraUserStatusCommandValidatorTests
     {
-        private readonly AlteraUserStatusCommandValidator _validator = new();
+        private readonly AlterarStatusUsuarioCommandValidator _validator = new();
 
         [Fact]
         public void Deve_passar_quando_comando_for_valido()
@@ -21,7 +21,7 @@ namespace Validators.Tests.v1.Adm
         [Fact]
         public void Deve_falhar_quando_cGuid_for_vazio()
         {
-            var request = new AlteraUserStatusCommand
+            var request = new AlterarStatusUsuarioCommand
             {
                 cGuid = Guid.Empty,
                 bStatus = true

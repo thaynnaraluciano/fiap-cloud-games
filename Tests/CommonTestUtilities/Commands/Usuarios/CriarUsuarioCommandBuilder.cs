@@ -10,8 +10,7 @@ namespace CommonTestUtilities.Commands.Usuarios
         {
             return new Faker<CriarUsuarioCommand>()
                 .RuleFor(c => c.Nome, f => f.Name.FullName())
-                .RuleFor(c => c.Email, f => f.Internet.Email())
-                .RuleFor(c => c.PerfilUsuario, f => PerfilUsuarioEnum.Administrador);
+                .RuleFor(c => c.Email, f => f.Internet.Email());
         }
     }
 }

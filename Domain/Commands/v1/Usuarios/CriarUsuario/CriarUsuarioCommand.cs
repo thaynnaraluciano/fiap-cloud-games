@@ -1,5 +1,4 @@
-﻿using Domain.Enums;
-using MediatR;
+﻿using MediatR;
 
 namespace Domain.Commands.v1.Usuarios.CriarUsuario
 {

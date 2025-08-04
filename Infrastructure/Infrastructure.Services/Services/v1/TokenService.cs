@@ -25,7 +25,7 @@ namespace Infrastructure.Services.Services.v1
 
                 var claims = new[]
                 {
-                    new Claim("email", email),
+                    new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Role, perfil)
                 };
 
