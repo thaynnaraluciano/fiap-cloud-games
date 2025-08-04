@@ -11,5 +11,6 @@ namespace Infrastructure.Data.Interfaces.Usuarios
         Task RemoverAsync(UsuarioModel usuario);
         UsuarioModel? ObterPorEmailAsync(string email);
         Task<bool> AlterarStatusUsuario(UsuarioModel userModel);
+        public int ObterQtdUsuariosCadastradosAsync();
     }
 }
