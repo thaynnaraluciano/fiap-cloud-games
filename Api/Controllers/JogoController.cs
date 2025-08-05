@@ -7,6 +7,7 @@ using Domain.Commands.v1.Jogos.RemoverJogo;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Domain.Commands.v1.Jogos.BuscarJogoPorId;
 
 namespace Api.Controllers
 {
@@ -23,6 +24,9 @@ namespace Api.Controllers
 
         [HttpGet]
         [Authorize(Policy = PoliticasDeAcesso.Usuario)]
+        [ProducesResponseType(typeof(IEnumerable<ListarJogoCommandResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> BuscarTodos()
         {
             var query = new ListarJogosCommand();
@@ -33,6 +37,9 @@ namespace Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = PoliticasDeAcesso.Usuario)]
+        [ProducesResponseType(typeof(BuscarJogoPorIdCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
             var query = new BuscarJogoPorIdCommand(id);
@@ -42,25 +49,39 @@ namespace Api.Controllers
 
         [HttpPost]
         [Authorize(Policy = PoliticasDeAcesso.Admin)]
+        [ProducesResponseType(typeof(CriarJogoCommandResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Criar([FromBody] CriarJogoCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            var resultado = await _mediator.Send(command);
+            return Created(string.Empty, resultado);
         }
 
         [HttpPut("{id}")]
         [Authorize(Policy = PoliticasDeAcesso.Admin)]
+        [ProducesResponseType(typeof(AtualizarJogoCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarJogoCommand command)
         {
             if (id != command.Id)
                 return BadRequest("ID do corpo e da URL não coincidem.");
 
-            await _mediator.Send(command);
-            return NoContent();
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Policy = PoliticasDeAcesso.Admin)]
-        public async Task<ActionResult> Remover(Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Remover(Guid id)
         {
             var command = new RemoverJogoCommand(id);
             await _mediator.Send(command);

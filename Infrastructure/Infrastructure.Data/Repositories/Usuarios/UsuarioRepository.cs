@@ -27,8 +27,15 @@ namespace Infrastructure.Data.Repositories.Usuarios
 
         public async Task<UsuarioModel> ObterPorIdAsync(Guid id)
         {
-            //TO DO tratar retorno null?
             return await _context.Usuarios.FindAsync(id);
+        }
+
+        public UsuarioModel? ObterPorEmailAsync(string email)
+        {
+            if (email != null)
+                return _context.Usuarios.FirstOrDefault(x => string.Equals(x.Email, email));
+
+            return null;
         }
 
         public async Task<IEnumerable<UsuarioModel>> ObterTodosAsync()
@@ -40,6 +47,21 @@ namespace Infrastructure.Data.Repositories.Usuarios
         {
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> AlterarStatusUsuario(UsuarioModel userModel)
+        {
+            var user = await _context.Usuarios.Where(x => x.Id == userModel.Id).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                throw new KeyNotFoundException("Usuário não encontrado");
+            }
+            if (user.Ativo != userModel.Ativo)
+            {
+                user.Ativo = userModel.Ativo;
+                await _context.SaveChangesAsync();
+            }
+            return user.Ativo;
         }
     }
 }

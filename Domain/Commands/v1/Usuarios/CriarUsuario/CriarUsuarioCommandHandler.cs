@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Enums;
 using Infrastructure.Data.Interfaces.Usuarios;
 using Infrastructure.Data.Models.Usuarios;
 using MediatR;
@@ -18,10 +19,19 @@ namespace Domain.Commands.v1.Usuarios.CriarUsuario
 
         public async Task<CriarUsuarioCommandResponse> Handle(CriarUsuarioCommand request, CancellationToken cancellationToken)
         {
-            //TO DO - confirmar qual a chave única pra colocar na validação de usuário existente
+            var usuarioExistente = _usuarioRepository.ObterPorEmailAsync(request.Email);
+            if (usuarioExistente != null)
+            {
+                throw new Exception("Já existe um usuário criado para o e-mail fornecido");
+            }
 
             var usuario = _mapper.Map<UsuarioModel>(request);
-            
+
+            var todosUsuarios = await _usuarioRepository.ObterTodosAsync();
+
+            usuario.PerfilUsuario = todosUsuarios.Any() ? 
+                (int)PerfilUsuarioEnum.Usuario : (int)PerfilUsuarioEnum.Administrador;
+
             await _usuarioRepository.AdicionarAsync(usuario);
             return _mapper.Map<CriarUsuarioCommandResponse>(usuario);
         }

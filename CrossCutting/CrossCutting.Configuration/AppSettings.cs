@@ -7,5 +7,7 @@ namespace CrossCutting.Configuration
         public static AppSettings Settings { get; set; }
 
         public JwtSettings Jwt { get; set; }
+
+        public SmtpSettings Smtp { get; set; }
     }
 }

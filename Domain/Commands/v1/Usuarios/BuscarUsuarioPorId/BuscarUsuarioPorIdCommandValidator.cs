@@ -4,7 +4,8 @@ namespace Domain.Commands.v1.Usuarios.BuscarUsuarioPorId
 {
     public class BuscarUsuarioPorIdCommandValidator : AbstractValidator<BuscarUsuarioPorIdCommand>
     {
-        public BuscarUsuarioPorIdCommandValidator() {
+        public BuscarUsuarioPorIdCommandValidator()
+        {
 
             RuleFor(command => command.Id)
                 .NotEmpty().WithMessage("O ID do usuário não pode estar vazio.")

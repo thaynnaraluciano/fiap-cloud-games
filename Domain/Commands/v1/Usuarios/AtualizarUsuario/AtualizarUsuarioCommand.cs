@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Enums;
+using MediatR;
 
 namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
 {
@@ -7,6 +8,6 @@ namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
         public Guid Id { get; set; }
         public string? Nome { get; set; }
         public string? Email { get; set; }
-        public int PerfilUsuario { get; set; }
+        public PerfilUsuarioEnum PerfilUsuario { get; set; }
     }
 }

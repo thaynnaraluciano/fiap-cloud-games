@@ -1,4 +1,6 @@
-﻿namespace Domain.Commands.v1.Usuarios.CriarUsuario
+﻿using Domain.Enums;
+
+namespace Domain.Commands.v1.Usuarios.CriarUsuario
 {
     public class CriarUsuarioCommandResponse
     {
@@ -7,7 +9,7 @@
         public string? Nome { get; set; }
 
         public string? Email { get; set; }
-        
-        public int PerfilUsuario { get; set; }
+
+        public PerfilUsuarioEnum PerfilUsuario { get; set; }
     }
 }

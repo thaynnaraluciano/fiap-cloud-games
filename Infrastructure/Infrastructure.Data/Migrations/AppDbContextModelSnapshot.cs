@@ -62,6 +62,50 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Jogos");
                 });
 
+            modelBuilder.Entity("Infrastructure.Data.Models.Promocao.PromocaoJogoModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("JogoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PromocaoId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JogoId");
+
+                    b.HasIndex("PromocaoId");
+
+                    b.ToTable("PromocaoJogos");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Models.Promocao.PromocaoModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Desconto")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Promocoes");
+                });
+
             modelBuilder.Entity("Infrastructure.Data.Models.Usuarios.UsuarioModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -70,6 +114,9 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("ConfirmadoEm")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -82,9 +129,41 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("PerfilUsuario")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Senha")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Models.Promocao.PromocaoJogoModel", b =>
+                {
+                    b.HasOne("Infrastructure.Data.Models.Jogos.JogoModel", "Jogo")
+                        .WithMany("PromocaoJogos")
+                        .HasForeignKey("JogoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.Data.Models.Promocao.PromocaoModel", "Promocao")
+                        .WithMany("PromocaoJogos")
+                        .HasForeignKey("PromocaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Jogo");
+
+                    b.Navigation("Promocao");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Models.Jogos.JogoModel", b =>
+                {
+                    b.Navigation("PromocaoJogos");
+                });
+
+            modelBuilder.Entity("Infrastructure.Data.Models.Promocao.PromocaoModel", b =>
+                {
+                    b.Navigation("PromocaoJogos");
                 });
 #pragma warning restore 612, 618
         }
