@@ -19,7 +19,9 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     IdJogo = table.Column<Guid>(type: "TEXT", nullable: false),
                     IdUsuario = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DtAdquirido = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    DtAdquirido = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PrecoOriginal = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PrecoFinal = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

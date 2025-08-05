@@ -1,31 +1,60 @@
 ﻿using AutoMapper;
 using Infrastructure.Data.Interfaces.Biblioteca;
+using Infrastructure.Data.Interfaces.Pagamento;
+using Infrastructure.Data.Interfaces.Promocoes;
 using Infrastructure.Data.Models.Biblioteca;
 using MediatR;
 
-namespace Domain.Commands.v1.Biblioteca.ComprarJogo
+namespace Domain.Commands.v1.Biblioteca.ComprarJogo;
+
+public class ComprarJogoCommandHandler : IRequestHandler<ComprarJogoCommand, ComprarJogoCommandResponse>
 {
-    public class ComprarJogoCommandHandler : IRequestHandler<ComprarJogoCommand, ComprarJogoCommandResponse>
+    private readonly IBibliotecaRepository _bibliotecaRepository;
+    private readonly IMapper _mapper;
+    private readonly IPromocaoRepository _promocaoRepository;
+    private readonly IPagamentoService _pagamentoService;
+
+    public ComprarJogoCommandHandler(IBibliotecaRepository bibliotecaRepository, 
+                                     IMapper mapper,
+                                     IPromocaoRepository promocaoRepository,
+                                     IPagamentoService pagamentoService)
     {
-        private readonly IBibliotecaRepository _bibliotecaRepository;
-        private readonly IMapper _mapper;
+        _bibliotecaRepository = bibliotecaRepository;
+        _mapper = mapper;
+        _promocaoRepository = promocaoRepository;
+        _pagamentoService = pagamentoService;
+    }
 
-        public ComprarJogoCommandHandler(IBibliotecaRepository bibliotecaRepository, IMapper mapper)
+    public async Task<ComprarJogoCommandResponse> Handle(ComprarJogoCommand request, CancellationToken cancellationToken)
+    {
+        var bibliotecaCompra = _mapper.Map<BibliotecaModel>(request);
+
+        // 1. Buscar promoção ativa
+        var promocaoAtiva = await _promocaoRepository.ObterPromocaoAtivaPorJogoAsync(request.IdJogo);
+
+        // 2. Calcular preços
+        bibliotecaCompra.PrecoOriginal = request.Preco;
+
+        if (promocaoAtiva != null)
         {
-            _bibliotecaRepository = bibliotecaRepository;
-            _mapper = mapper;
+            var descontoValor = request.Preco * promocaoAtiva.Desconto;
+            bibliotecaCompra.PrecoFinal = request.Preco - descontoValor;
+        }
+        else
+        {
+            bibliotecaCompra.PrecoFinal = request.Preco;
         }
 
-        public async Task<ComprarJogoCommandResponse> Handle(ComprarJogoCommand request, CancellationToken cancellationToken)
-        {
-            var bibliotecaCompra = _mapper.Map<BibliotecaModel>(request);
+        // 3. Simular pagamento
+        var pagamentoAprovado = await _pagamentoService
+            .ProcessarPagamento(bibliotecaCompra.PrecoFinal, "Cartão de Crédito");
 
-            //Todo: Incluir uma api fake de pagamento para validar a compra
+        if (!pagamentoAprovado)
+            throw new Exception("Pagamento não aprovado pelo gateway.");
 
-            // 3. Registrar compra
-            var resultadoCompra = await _bibliotecaRepository.ComprarJogo(bibliotecaCompra);
+        // 4. Registrar compra
+        var resultadoCompra = await _bibliotecaRepository.ComprarJogo(bibliotecaCompra);
 
-            return _mapper.Map<ComprarJogoCommandResponse>(resultadoCompra);
-        }
+        return _mapper.Map<ComprarJogoCommandResponse>(resultadoCompra);
     }
 }

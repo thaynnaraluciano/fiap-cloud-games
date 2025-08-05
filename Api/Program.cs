@@ -43,6 +43,7 @@ using Domain.Commands.v1.Biblioteca.ConsultaBiblioteca;
 using Infrastructure.Data.Interfaces.Biblioteca;
 using Infrastructure.Data.Repositories.Biblioteca;
 using Domain.Commands.v1.Biblioteca.ComprarJogo;
+using Infrastructure.Data.Interfaces.Pagamento;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -174,6 +175,7 @@ builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddSingleton<IEmailTemplateService, EmailTemplateService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPromocaoRepository, PromocaoRepository>();

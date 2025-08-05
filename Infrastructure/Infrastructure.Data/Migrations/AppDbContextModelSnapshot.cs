@@ -32,6 +32,12 @@ namespace Infrastructure.Data.Migrations
                     b.Property<Guid>("IdUsuario")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("PrecoOriginal")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PrecoFinal")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Biblioteca");
