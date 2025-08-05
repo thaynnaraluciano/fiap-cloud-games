@@ -49,6 +49,11 @@ namespace Infrastructure.Data.Repositories.Usuarios
             await _context.SaveChangesAsync();
         }
 
+        public int ObterQtdUsuariosCadastradosAsync()
+        {
+            return _context.Usuarios.Count();
+        }
+
         public async Task<bool> AlterarStatusUsuario(UsuarioModel userModel)
         {
             var user = await _context.Usuarios.Where(x => x.Id == userModel.Id).FirstOrDefaultAsync();

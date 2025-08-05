@@ -20,11 +20,16 @@
             Ativo = true;
         }
 
-        public void Atualizar(string nome, string email, int perfilUsuario)
+        public void Atualizar(string? nome, string? email, int? perfilUsuario)
         {
-            Nome = nome;
-            Email = email;
-            PerfilUsuario = perfilUsuario;
+            if (!string.IsNullOrEmpty(nome))
+                Nome = nome;
+
+            if (!string.IsNullOrEmpty(email))
+                Email = email;
+
+            if (perfilUsuario.HasValue)
+                PerfilUsuario = perfilUsuario.Value;
         }
     }
 }
