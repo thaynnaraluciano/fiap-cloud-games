@@ -22,7 +22,9 @@ namespace Domain.Commands.v1.Biblioteca.ComprarJogo
 
             //Todo: Incluir uma api fake de pagamento para validar a compra
 
+            // 3. Registrar compra
             var resultadoCompra = await _bibliotecaRepository.ComprarJogo(bibliotecaCompra);
+
             return _mapper.Map<ComprarJogoCommandResponse>(resultadoCompra);
         }
     }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/biblioteca")]
+    [Route("api/v1/[controller]")]
     public class BibliotecaController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,9 +26,9 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route(template: "ComprarJogo")]
-        public async Task<IActionResult> ComprarJogo([FromBody]ComprarJogoCommand compra)
+        public async Task<IActionResult> ComprarJogo([FromBody]ComprarJogoCommand command)
         {
-            var result = await _mediator.Send(compra);
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }
