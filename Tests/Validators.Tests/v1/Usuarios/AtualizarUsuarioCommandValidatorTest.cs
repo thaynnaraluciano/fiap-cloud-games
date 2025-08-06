@@ -63,13 +63,25 @@ namespace Validators.Tests.v1.Usuarios
             result.Errors.Should().Contain(e => e.PropertyName == "Email");
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(3)]
-        public void Deve_falhar_quando_PerfilUsuario_for_invalido(int perfilInvalido)
+        [Fact]
+        public void Deve_falhar_quando_PerfilUsuario_for_zero()
         {
             var request = AtualizarUsuarioCommandBuilder.Build();
-            request.PerfilUsuario = (PerfilUsuarioEnum)perfilInvalido;
+            request.PerfilUsuario = (PerfilUsuarioEnum)0;
+
+            var result = _validator.Validate(request);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "PerfilUsuario" &&
+                e.ErrorMessage == "Necessário informar o perfil do usuário");
+        }
+
+        [Fact]
+        public void Deve_falhar_quando_PerfilUsuario_for_invalido()
+        {
+            var request = AtualizarUsuarioCommandBuilder.Build();
+            request.PerfilUsuario = (PerfilUsuarioEnum)3;
 
             var result = _validator.Validate(request);
 
