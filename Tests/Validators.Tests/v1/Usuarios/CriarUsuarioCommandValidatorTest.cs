@@ -45,7 +45,7 @@ namespace Validators.Tests.v1.Usuarios
             resultado.IsValid.Should().BeFalse();
             resultado.Errors.Should().Contain(e =>
                 e.PropertyName == "Nome" &&
-                e.ErrorMessage == "O nome o usuário deve ter entre 5 e 100 caracteres");
+                e.ErrorMessage == "O nome do usuário deve ter entre 5 e 100 caracteres");
         }
 
         [Fact]
@@ -62,18 +62,20 @@ namespace Validators.Tests.v1.Usuarios
                 e.ErrorMessage == "O e-mail do usuário é obrigatório.");
         }
 
-        [Fact]
-        public void Deve_falhar_quando_email_tiver_menos_de_3_caracteres()
+        [Theory]
+        [InlineData("ab")]
+        [InlineData("a")]
+        public void Deve_falhar_quando_email_tiver_menos_de_3_caracteres(string emailInvalido)
         {
             var request = CriarUsuarioCommandBuilder.Build();
-            request.Email = "a";
+            request.Email = emailInvalido;
 
             var resultado = _validator.Validate(request);
 
             resultado.IsValid.Should().BeFalse();
             resultado.Errors.Should().Contain(e =>
                 e.PropertyName == "Email" &&
-                e.ErrorMessage == "O e-mail o usuário deve ter entre 5 e 100 caracteres");
+                e.ErrorMessage == "O e-mail do usuário deve ter entre 5 e 100 caracteres");
         }
     }
 }
