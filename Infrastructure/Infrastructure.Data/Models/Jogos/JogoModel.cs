@@ -22,12 +22,19 @@ namespace Infrastructure.Data.Models.Jogos
             DataLancamento = dataLancamento;
         }
 
-        public void Atualizar(string nome, string descricao, decimal preco, DateTime dataLancamento)
-        {
-            Nome = nome;
-            Descricao = descricao;
-            Preco = preco;
-            DataLancamento = dataLancamento;
+        public void Atualizar(string? nome, string? descricao, decimal? preco, DateTime? dataLancamento)
+        { 
+            if (!string.IsNullOrEmpty(nome))
+                Nome = nome!;
+
+            if (!string.IsNullOrEmpty(descricao))
+                Descricao = descricao!;
+
+            if (preco != null && preco > 0)
+                Preco = preco.Value;
+
+            if (dataLancamento != null)
+                DataLancamento = dataLancamento.Value;
         }
     }
 }

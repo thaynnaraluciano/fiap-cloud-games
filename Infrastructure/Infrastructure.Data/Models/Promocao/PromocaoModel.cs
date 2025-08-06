@@ -25,12 +25,19 @@ namespace Infrastructure.Data.Models.Promocao
             PromocaoJogos = new List<PromocaoJogoModel>();
         }
 
-        public void Atualizar(string nome, decimal desconto, DateTime dataInicio, DateTime dataFim)
+        public void Atualizar(string? nome, decimal? desconto, DateTime? dataInicio, DateTime? dataFim)
         {
-            Nome = nome;
-            Desconto = desconto;
-            DataInicio = dataInicio;
-            DataFim = dataFim;
+            if (!string.IsNullOrEmpty(nome)) 
+                Nome = nome;
+
+            if (desconto != null)
+                Desconto = desconto.Value;
+
+            if (dataInicio != null)
+            DataInicio = dataInicio.Value;
+
+            if (dataFim != null)
+                DataFim = dataFim.Value;
         }
 
         public void AdicionarJogo(IEnumerable<JogoModel> jogos)
