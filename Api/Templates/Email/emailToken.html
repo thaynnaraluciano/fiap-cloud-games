@@ -1,110 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Token de Acesso FIAP</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000000;
-      font-family: Arial, sans-serif;
-      color: #ffffff;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token de Acesso FIAP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+        }
 
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      background-color: #111111;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
-      border-top: 6px solid #c41230;
-    }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+            border-top: 6px solid #c41230;
+        }
 
-    .header {
-      text-align: center;
-      padding-bottom: 20px;
-    }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
 
-    .logo {
-      max-width: 160px;
-      margin-bottom: 10px;
-    }
+        .logo {
+            max-width: 160px;
+            margin-bottom: 10px;
+        }
 
-    .title {
-      color: #c41230;
-      font-size: 22px;
-      margin-bottom: 5px;
-      text-shadow: 1px 1px 2px #ff0055;
-    }
+        .title {
+            color: #c41230;
+            font-size: 22px;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px #ff0055;
+        }
 
-    .token-label {
-      font-weight: bold;
-      margin-top: 20px;
-      text-align: center;
-      color: #ffffff;
-    }
+        .token-label {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #ffffff;
+        }
 
-    .token-box {
-      background-color: #222222;
-      padding: 15px;
-      border-radius: 6px;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      color: #ffffff;
-      overflow-x: auto;
-      white-space: nowrap;
-      word-break: break-all;
-      border: 1px solid #444444;
-      margin-top: 10px;
-    }
+        .token-box {
+            background-color: #222222;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #ffffff;
+            overflow-x: auto;
+            white-space: nowrap;
+            word-break: break-all;
+            border: 1px solid #444444;
+            margin-top: 10px;
+        }
 
-    .content {
-      color: #dddddd;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+        .content {
+            color: #dddddd;
+            font-size: 15px;
+            line-height: 1.6;
+        }
 
-    .footer {
-      font-size: 12px;
-      text-align: center;
-      color: #888888;
-      margin-top: 30px;
-      border-top: 1px solid #333333;
-      padding-top: 15px;
-    }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #888888;
+            margin-top: 30px;
+            border-top: 1px solid #333333;
+            padding-top: 15px;
+        }
 
-    @media only screen and (max-width: 600px) {
-      .container {
-        padding: 15px;
-      }
+        @media only screen and (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
 
-      .token-box {
-        font-size: 12px;
-      }
-    }
-  </style>
+            .token-box {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div style="
+    <div style="
   background-color: #000000;
   text-align: center;
   padding: 30px 0 10px 0;
 ">
-  <div style="
+        <div style="
     font-family: Arial, sans-serif;
     font-size: 36px;
     color: #ff3366; /* tom mais suave */
     font-weight: bold;
     letter-spacing: 6px;
-    text-shadow: 0 0 2px #ff3366, 0 0 4px #ff3366; 
+    text-shadow: 0 0 2px #ff3366, 0 0 4px #ff3366;
   ">
-    FIAP
-  </div>
-  <div style="
+            FIAP
+        </div>
+        <div style="
     font-family: Arial, sans-serif;
     font-size: 16px;
     color: #ff3366; /* tom mais suave */
@@ -112,36 +112,38 @@
     margin-top: 5px;
     text-shadow: 0 0 1px #ff3366, 0 0 3px #ff3366;
   ">
-    TECH CHALLENGE
-  </div>
-</div>
-
-
-  <!-- Conteúdo -->
-  <div class="container">
-    <div class="header">
-      <div class="title">Token de Acesso</div>
+            TECH CHALLENGE
+        </div>
     </div>
 
-    <div class="content">
-      <p>Olá, @NomeUser@</p>
-      <p>Você solicitou um token de acesso para autenticação. Use o código abaixo como Bearer Token no cabeçalho da sua requisição.</p>
 
-      <div class="token-label">Seu token:</div>
-      <div class="token-box">
-        @TOKEN@
-      </div>
+    <!-- Conteúdo -->
+    <div class="container">
+        <div class="header">
+            <div class="title">Token de Acesso</div>
+        </div>
 
-      <p style="margin-top: 20px;">Este token é válido por 1h. Se você não fez essa solicitação, ignore este e-mail.</p>
+        <div class="content">
+            <p>Olá, @NomeUser@</p>
+            <p>Você solicitou um token de acesso para autenticação. Use o código abaixo como Bearer Token no cabeçalho da sua requisição.</p>
 
-      <p>Atenciosamente,<br>
-      Equipe FIAP</p>
+            <div class="token-label">Seu token:</div>
+            <div class="token-box">
+                @TOKEN@
+            </div>
+
+            <p style="margin-top: 20px;">Este token é válido por 1h. Se você não fez essa solicitação, ignore este e-mail.</p>
+
+            <p>
+                Atenciosamente,<br>
+                Equipe FIAP-TechChallenge
+            </p>
+        </div>
+
+        <div class="footer">
+            © 2025 FIAP-TechChallenge<br>
+            Este é um e-mail automático. Não responda.
+        </div>
     </div>
-
-    <div class="footer">
-      © 2025 FIAP-TechChallenge<br>
-      Este é um e-mail automático. Não responda.
-    </div>
-  </div>
 </body>
 </html>
