@@ -14,7 +14,8 @@ namespace Domain.Commands.v1.Usuarios.AtualizarUsuario
                 .Length(3, 100).WithMessage("O nome o usuário deve ter entre 5 e 100 caracteres");
 
             RuleFor(command => command.Email)
-                .EmailAddress().WithMessage("Insira um endereço de e-mail válido");
+                .NotEmpty().WithMessage("O e-mail é obrigatório.")
+                .EmailAddress().WithMessage("Insira um endereço de e-mail válido.");
 
             RuleFor(command => (int)command.PerfilUsuario)
                 .NotEmpty().WithMessage("Necessário informar o perfil do usuário")
