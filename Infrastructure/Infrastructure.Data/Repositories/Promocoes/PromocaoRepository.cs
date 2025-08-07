@@ -33,6 +33,16 @@ namespace Infrastructure.Data.Repositories.Promocoes
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<PromocaoModel?> ObterPromocaoAtivaPorJogoAsync(Guid jogoId)
+        {
+            return await _context.Promocoes
+                .Include(p => p.PromocaoJogos)
+                .Where(p => p.PromocaoJogos.Any(pj => pj.JogoId == jogoId) &&
+                            DateTime.UtcNow >= p.DataInicio &&
+                            DateTime.UtcNow <= p.DataFim)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> ExistemJogosComPromocaoAsync(IEnumerable<Guid> jogosIds, Guid? promocaoIdAtual = null)
         {
             return await _context.PromocaoJogos

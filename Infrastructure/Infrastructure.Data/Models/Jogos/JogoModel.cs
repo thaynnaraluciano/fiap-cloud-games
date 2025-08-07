@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data.Models.Promocao;
+﻿using Infrastructure.Data.Models.Biblioteca;
+using Infrastructure.Data.Models.Promocao;
 
 namespace Infrastructure.Data.Models.Jogos
 {
@@ -11,6 +12,8 @@ namespace Infrastructure.Data.Models.Jogos
         public DateTime DataLancamento { get; private set; }
 
         public ICollection<PromocaoJogoModel> PromocaoJogos { get; private set; } = new List<PromocaoJogoModel>();
+
+        public ICollection<BibliotecaModel> Bibliotecas { get; set; } = new List<BibliotecaModel>();
 
         public JogoModel() { }
 
@@ -30,7 +33,7 @@ namespace Infrastructure.Data.Models.Jogos
             if (!string.IsNullOrEmpty(descricao))
                 Descricao = descricao!;
 
-            if (preco != null && preco > 0)
+            if (preco.HasValue && preco.Value > 0)
                 Preco = preco.Value;
 
             if (dataLancamento != null)

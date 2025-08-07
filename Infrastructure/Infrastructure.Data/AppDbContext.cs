@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data.Models.Jogos;
+﻿using Infrastructure.Data.Models.Biblioteca;
+using Infrastructure.Data.Models.Jogos;
 using Infrastructure.Data.Models.Promocao;
 using Infrastructure.Data.Models.Usuarios;
 using Microsoft.EntityFrameworkCore;
@@ -21,5 +22,6 @@ namespace Infrastructure.Data
         public DbSet<PromocaoModel> Promocoes { get; set; }
         public DbSet<PromocaoJogoModel> PromocaoJogos { get; set; }
         public DbSet<UsuarioModel> Usuarios { get; set; }
+        public DbSet<BibliotecaModel> Biblioteca { get; set; }
     }
 }

@@ -39,6 +39,12 @@ using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
 using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
 using Domain.Commands.v1.Notificacao.Email;
 
+using Domain.Commands.v1.Biblioteca.ConsultaBiblioteca;
+using Infrastructure.Data.Interfaces.Biblioteca;
+using Infrastructure.Data.Repositories.Biblioteca;
+using Domain.Commands.v1.Biblioteca.ComprarJogo;
+using Infrastructure.Data.Interfaces.Pagamento;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -120,6 +126,10 @@ builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(BuscarPromocaoPorIdCommandHandler).Assembly));
 // Notificação
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(EnviarEmailCommandHandler).Assembly));
+// Biblioteca
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ConsultaBibliotecaCommandHandler).Assembly));
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ComprarJogoCommandHandler).Assembly));
+
 #endregion
 
 #region AutoMapper
@@ -127,6 +137,7 @@ builder.Services.AddAutoMapper(typeof(JogoProfile));
 builder.Services.AddAutoMapper(typeof(UsuarioProfile));
 builder.Services.AddAutoMapper(typeof(PromocaoProfile));
 builder.Services.AddAutoMapper(typeof(EmailProfile));
+builder.Services.AddAutoMapper(typeof(BibliotecaProfile));
 #endregion
 
 #region Validators
@@ -154,6 +165,9 @@ builder.Services.AddScoped<IValidator<ListarUsuariosCommand>, ListarUsuariosComm
 builder.Services.AddScoped<IValidator<CriarSenhaCommand>, CriarSenhaCommandValidator>();
 // Notificação
 builder.Services.AddScoped<IValidator<EnviarEmailCommand>, EnviarEmailCommandValidator>();
+// Biblioteca
+builder.Services.AddScoped<IValidator<ConsultaBibliotecaCommand>, ConsultaBibliotecaCommandValidator>();
+builder.Services.AddScoped<IValidator<ComprarJogoCommand>, ComprarJogoCommandValidator>();
 #endregion
 
 #region Interfaces
@@ -161,14 +175,16 @@ builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<ICriptografiaService, CriptografiaService>();
 builder.Services.AddSingleton<IEmailTemplateService, EmailTemplateService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IPromocaoRepository, PromocaoRepository>();
+builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 #endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
-builder.Services.AddDbContext<AppDbContext>(options =>options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
