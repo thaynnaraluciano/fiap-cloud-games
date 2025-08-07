@@ -7,6 +7,7 @@ using Domain.Commands.v1.Promocoes.RemoverPromocao;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -26,6 +27,10 @@ namespace Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<ListarPromocoesCommandResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Lista todas as promoções",
+            Description = "Retorna uma lista com todas as promoções cadastradas no sistema. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> ListarTodos()
         {
             var query = new ListarPromocoesCommand();
@@ -38,6 +43,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Busca promoção por ID",
+            Description = "Retorna os dados de uma promoção específica com base no identificador (GUID) informado. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
             var promocao = new BuscarPromocaoPorIdCommand(id);
@@ -55,6 +64,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Cria uma nova promoção",
+            Description = "Cria um novo registro de promoção com os dados fornecidos no corpo da requisição. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> Criar([FromBody] CriarPromocaoCommand command)
         {
             var resultado = await _mediator.Send(command);
@@ -72,6 +85,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Atualiza uma promoção existente",
+            Description = "Atualiza os dados de uma promoção com base no ID informado na URL. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarPromocaoCommand command)
         {
             if (id != command.Id)
@@ -87,6 +104,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Remove uma promoção",
+            Description = "Remove permanentemente uma promoção do sistema com base no identificador informado. Requer permissão de administrador."
+        )]
         public async Task<ActionResult> Remover(Guid id)
         {
             var command = new RemoverPromocaoCommand(id);

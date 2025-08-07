@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Commands.v1.Jogos.BuscarJogoPorId;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -27,6 +28,10 @@ namespace Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<ListarJogoCommandResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Obtém todos os jogos",
+            Description = "Este endpoint retorna os dados completos de todos os jogos cadastrados, sem filtros."
+        )]
         public async Task<IActionResult> BuscarTodos()
         {
             var query = new ListarJogosCommand();
@@ -40,6 +45,10 @@ namespace Api.Controllers
         [ProducesResponseType(typeof(BuscarJogoPorIdCommandResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Obtém um jogo por ID",
+            Description = "Retorna os detalhes de um jogo específico com base no identificador GUID fornecido."
+        )]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
             var query = new BuscarJogoPorIdCommand(id);
@@ -53,6 +62,11 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Cria um novo jogo",
+            Description = "Cria um novo registro de jogo com os dados fornecidos no corpo da requisição. Requer permissão de administrador."
+        )]
+
         public async Task<IActionResult> Criar([FromBody] CriarJogoCommand command)
         {
             var resultado = await _mediator.Send(command);
@@ -66,6 +80,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Atualiza um jogo existente",
+            Description = "Atualiza os dados de um jogo com base no ID informado na URL. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarJogoCommand command)
         {
             if (id != command.Id)
@@ -81,11 +99,15 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Remove um jogo",
+            Description = "Remove permanentemente um jogo do sistema com base no ID informado. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> Remover(Guid id)
         {
             var command = new RemoverJogoCommand(id);
             await _mediator.Send(command);
-            return NoContent(); 
+            return NoContent();
         }
     }
 }

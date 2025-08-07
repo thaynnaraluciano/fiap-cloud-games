@@ -38,6 +38,7 @@ using Domain.Commands.v1.Usuarios.AtualizarUsuario;
 using Domain.Commands.v1.Usuarios.BuscarUsuarioPorId;
 using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
 using Domain.Commands.v1.Notificacao.Email;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +68,23 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "FIAP Cloud Games",
+        Version = "v1",
+        Description = @"
+            Uma plataforma de venda de jogos digitais e gestão de servidores para partidas online.
+
+            - Funcionalidades principais: gerenciamento de jogos, usuários, promoções e envio de notificações por e-mail.
+
+            - Jogos: permite criar, listar, atualizar e remover jogos disponíveis para compra.
+            - Usuários: cadastro, criação inicial de senha, gerenciamento de status e dados dos usuários.
+            - Promoções: controle completo de promoções, exclusivas para administradores.
+            - Notificações: envio de e-mails com tokens para criação de senha e confirmações.
+            - Biblioteca: funcionalidade para o usuário adicionar jogos à sua biblioteca pessoal.
+
+            -Segurança: a API utiliza autenticação JWT e políticas de autorização para garantir acesso adequado às funcionalidades."
+    });
     c.AddSecurityDefinition("Bearer", new()
     {
         Description = "Insira apenas o token JWT abaixo.",
@@ -76,7 +94,6 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-
     c.AddSecurityRequirement(new()
     {
         {
@@ -91,6 +108,7 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+    c.EnableAnnotations();
 });
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -174,6 +192,12 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseReDoc(c =>
+{
+    c.DocumentTitle = "REDOC API Documentation";
+    c.SpecUrl = "/swagger/v1/swagger.json";
+});
 
 app.UseHttpsRedirection();
 
