@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.Text.Json.Serialization;
 
 namespace Domain.Commands.v1.Biblioteca.ComprarJogo
 {
@@ -6,7 +7,9 @@ namespace Domain.Commands.v1.Biblioteca.ComprarJogo
     {
         public Guid IdUsuario { get; set; }
         public Guid IdJogo { get; set; }
+        [JsonIgnore]
         public decimal Preco { get; set; }
-        public DateTime DtAdquirido { get; set; } = DateTime.Now;
+        [JsonIgnore]
+        public DateTime DtAdquirido { get; set; }
     }
 }

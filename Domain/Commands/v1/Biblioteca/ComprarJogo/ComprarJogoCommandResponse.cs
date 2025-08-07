@@ -3,4 +3,5 @@ public class ComprarJogoCommandResponse
 {
     public bool Sucesso { get; set; }
     public string? Mensagem { get; set; }
+    public DateTime? DtAdquirido { get; set; }
 }

@@ -12,36 +12,25 @@ namespace Infrastructure.Data.Repositories.Biblioteca
         {
             _context = context;
         }
-        public async Task<IEnumerable<JogoModel>> BuscaBibliotecaUser(BibliotecaModel model)
+        public async Task<IEnumerable<BibliotecaModel>> BuscaBibliotecaUser(Guid idUsuario)
         {
-            return await _context.Jogos
-            .Join(
-                _context.Biblioteca.Where(bli => bli.IdUsuario == model.IdUsuario),
-                jog => jog.Id,
-                bli => bli.IdJogo,
-                (jog, bli) => jog
-            )
-            .ToListAsync(); 
+            return await _context.Biblioteca
+                .Include(b => b.Jogo)
+                .Where(b => b.IdUsuario == idUsuario)
+                .ToListAsync();
         }
 
-        public async Task<ResultadoCompraModel> ComprarJogo(BibliotecaModel compra)
+        public async Task<bool> UsuarioPossuiJogoAsync(Guid idUsuario, Guid idJogo)
         {
-            var jaPossui = await _context.Biblioteca
-        .AnyAsync(b => b.IdUsuario == compra.IdUsuario && b.IdJogo == compra.IdJogo);
+            return await _context.Biblioteca
+                .AnyAsync(b => b.IdUsuario == idUsuario && b.IdJogo == idJogo);
+        }
 
-            if (jaPossui)
-                return new ResultadoCompraModel { Sucesso = false, Mensagem = "Usuário já possui esse jogo." };
-
-            try
-            {
-                _context.Biblioteca.Add(compra);
-                await _context.SaveChangesAsync();
-                return new ResultadoCompraModel { Sucesso = true, Mensagem = "Compra realizada com sucesso." };
-            }
-            catch (Exception ex)
-            {
-                return new ResultadoCompraModel { Sucesso = false, Mensagem = $"Erro ao comprar: {ex.Message}" };
-            }
+        public async Task<BibliotecaModel> AdicionarJogoAsync(BibliotecaModel compra)
+        {
+            _context.Biblioteca.Add(compra);
+            await _context.SaveChangesAsync();
+            return compra;
         }
     }
 }

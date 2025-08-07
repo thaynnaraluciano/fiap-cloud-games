@@ -1,6 +1,8 @@
-﻿using Domain.Commands.v1.Biblioteca.ComprarJogo;
+﻿using CrossCutting.Configuration.Authorization;
+using Domain.Commands.v1.Biblioteca.ComprarJogo;
 using Domain.Commands.v1.Biblioteca.ConsultaBiblioteca;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -15,7 +17,9 @@ public class BibliotecaController : ControllerBase
     {
         _mediator = mediator;
     }
+
     [HttpGet("{idUser}")]
+    [Authorize(Policy = PoliticasDeAcesso.Usuario)]
     public async Task<IActionResult> ConsultaBiblioteca(Guid idUser)
     {
         var command = new ConsultaBibliotecaCommand(idUser);
@@ -24,6 +28,7 @@ public class BibliotecaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = PoliticasDeAcesso.Usuario)]
     [Route(template: "ComprarJogo")]
     public async Task<IActionResult> ComprarJogo([FromBody]ComprarJogoCommand command)
     {

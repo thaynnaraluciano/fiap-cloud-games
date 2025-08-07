@@ -26,7 +26,7 @@ public class ConsultaBibliotecaCommandHandler : IRequestHandler<ConsultaBibliote
         _logger.LogInformation("Consultando biblioteca para o usuário ID: {IdUsuario}", request.IdUsuario);
 
         var bibliotecaPesquisa = _mapper.Map<BibliotecaModel>(request);
-        var jogosBiblioteca = await _bibliotecaRepository.BuscaBibliotecaUser(bibliotecaPesquisa);
+        var jogosBiblioteca = await _bibliotecaRepository.BuscaBibliotecaUser(request.IdUsuario);
 
         _logger.LogInformation("Consulta retornou {Quantidade} jogos.", jogosBiblioteca?.Count() ?? 0);
 
