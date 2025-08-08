@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Domain.Commands.v1.Usuarios.AlterarStatusUsuario;
 using CrossCutting.Exceptions;
 using System.Security.Claims;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -29,6 +30,10 @@ namespace Api.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Cria um novo usuário",
+            Description = "Cria um novo usuário no sistema com os dados fornecidos no corpo da requisição. Endpoint público."
+        )]
         public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioCommand command)
         {
             var response = await _mediator.Send(command);
@@ -41,6 +46,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(
+            Summary = "Cria a senha do usuário",
+            Description = "Permite que um usuário autenticado crie sua senha inicial usando o token recebido por e-mail."
+        )]
         public async Task<IActionResult> CriarSenha([FromBody] CriarSenhaCommand command)
         {
             var email = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
@@ -57,6 +66,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Lista todos os usuários",
+            Description = "Retorna uma lista com todos os usuários cadastrados. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> BuscarUsuarios()
         {
             var query = new ListarUsuariosCommand();
@@ -73,6 +86,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Busca usuário por ID",
+            Description = "Retorna os dados de um usuário específico, identificado pelo GUID informado. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> BuscarUsuarioPorId(Guid id)
         {
             var query = new BuscarUsuarioPorIdCommand(id);
@@ -89,6 +106,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Atualiza dados do usuário",
+            Description = "Atualiza as informações de um usuário existente. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> AtualizarUsuario([FromBody] AtualizarUsuarioCommand command)
         {
             return Ok(await _mediator.Send(command));
@@ -101,6 +122,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Altera o status do usuário",
+            Description = "Altera o status (ativo/inativo) de um usuário. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> AlterarStatusUsuario([FromBody] AlterarStatusUsuarioCommand command)
         {
             var result = await _mediator.Send(command);
@@ -114,6 +139,10 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Remove um usuário",
+            Description = "Remove um usuário do sistema com base no ID informado. Requer permissão de administrador."
+        )]
         public async Task<IActionResult> RemoverUsuario(Guid id)
         {
             var command = new RemoverUsuarioCommand(id);
