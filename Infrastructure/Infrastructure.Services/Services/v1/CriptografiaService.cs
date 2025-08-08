@@ -23,5 +23,17 @@ namespace Infrastructure.Services.Services.v1
                 return hashBuilder.ToString();
             }
         }
+
+        public string SaltSenha()
+        {
+            byte[] byteSalt = new byte[64];
+
+            using (RandomNumberGenerator salt = RandomNumberGenerator.Create())
+            {
+                salt.GetBytes(byteSalt);
+            }
+
+            return Convert.ToBase64String(byteSalt);
+        }
     }
 }
