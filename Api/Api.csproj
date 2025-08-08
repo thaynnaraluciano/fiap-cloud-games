@@ -29,4 +29,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Templates\Email\emailToken.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
