@@ -73,10 +73,7 @@ public class ComprarJogoCommandHandler : IRequestHandler<ComprarJogoCommand, Com
 
         if (promocaoAtiva != null)
         {
-            // TODO: A promoção é informada em valores reais, não em porcentagem. Alterar a lógica.
-            // TODO: Aproveitar o if promocaoAtiva que já existe ali em cima.
-            var descontoValor = request.Preco * promocaoAtiva.Desconto;
-            bibliotecaCompra.PrecoFinal = Math.Round(request.Preco - descontoValor, 2);
+            bibliotecaCompra.PrecoFinal = request.Preco - promocaoAtiva.Desconto;
         }
         else
         {
