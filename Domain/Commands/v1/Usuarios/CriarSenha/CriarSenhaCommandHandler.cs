@@ -37,7 +37,11 @@ namespace Domain.Commands.v1.Usuarios.CriarSenha
                 throw new ExcecaoBadRequest("Este usuário já foi confirmado.");
             }
 
-            usuario.Senha = _criptografiaService.HashSenha(command.Senha);
+            usuario.SenhaSalt = _criptografiaService.SaltSenha();
+
+            command.Senha = String.Concat(usuario.SenhaSalt, command.Senha);
+
+            usuario.SenhaHash = _criptografiaService.HashSenha(command.Senha);
             usuario.ConfirmadoEm = DateTime.Now;
 
             await _usuarioRepository.AtualizarAsync(usuario);

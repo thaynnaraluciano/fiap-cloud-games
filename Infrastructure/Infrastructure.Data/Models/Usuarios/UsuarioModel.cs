@@ -7,8 +7,9 @@
         public string Email { get; private set; }
         public int PerfilUsuario { get; set; }
         public bool Ativo { get; set; } = true;
-        public string? Senha { get; set; }
+        public string? SenhaHash { get; set; }
         public DateTime? ConfirmadoEm { get; set; }
+        public string? SenhaSalt { get; set; }
 
         public UsuarioModel() { }
 

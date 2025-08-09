@@ -33,10 +33,22 @@ namespace Domain.Commands.v1.Login
             _logger.LogInformation("Usuário iniciando login");
 
             var user = _usuarioRepository.ObterPorEmailAsync(command.Email!);
-            var hashSenha = _criptografiaService.HashSenha(command.Senha);
 
-            if (user == null || !user.Ativo || hashSenha != user.Senha)
+            if (user == null || !user.Ativo) 
+            {
+                _logger.LogError("Não foi possível seguir com o login");
                 throw new ExcecaoNaoAutorizado("Não foi possível prosseguir com o login, verifique suas credenciais e se a conta está ativa.");
+            }
+
+            var senha = String.Concat(user.SenhaSalt, command.Senha);
+
+            var hashSenha = _criptografiaService.HashSenha(senha);
+
+            if (hashSenha != user.SenhaHash)
+            {
+                _logger.LogError("Não foi possível seguir com o login");
+                throw new ExcecaoNaoAutorizado("Não foi possível prosseguir com o login, verifique suas credenciais e se a conta está ativa.");
+            }
 
             _logger.LogInformation($"Gerando token jwt para {command.Email}");
 

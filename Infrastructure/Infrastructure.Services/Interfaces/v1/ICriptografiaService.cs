@@ -3,5 +3,6 @@
     public interface ICriptografiaService
     {
         string HashSenha(string? senha);
+        string SaltSenha();
     }
 }

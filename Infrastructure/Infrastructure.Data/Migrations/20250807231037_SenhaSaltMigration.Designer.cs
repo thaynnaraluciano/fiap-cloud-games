@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,42 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250807231037_SenhaSaltMigration")]
+    partial class SenhaSaltMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
-
-            modelBuilder.Entity("Infrastructure.Data.Models.Biblioteca.BibliotecaModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DtAdquirido")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("IdJogo")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("IdUsuario")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("PrecoFinal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("PrecoOriginal")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdJogo");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.ToTable("Biblioteca");
-                });
 
             modelBuilder.Entity("Infrastructure.Data.Models.Jogos.JogoModel", b =>
                 {
@@ -150,25 +123,6 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Infrastructure.Data.Models.Biblioteca.BibliotecaModel", b =>
-                {
-                    b.HasOne("Infrastructure.Data.Models.Jogos.JogoModel", "Jogo")
-                        .WithMany("Bibliotecas")
-                        .HasForeignKey("IdJogo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infrastructure.Data.Models.Usuarios.UsuarioModel", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Jogo");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("Infrastructure.Data.Models.Promocao.PromocaoJogoModel", b =>
                 {
                     b.HasOne("Infrastructure.Data.Models.Jogos.JogoModel", "Jogo")
@@ -190,8 +144,6 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Infrastructure.Data.Models.Jogos.JogoModel", b =>
                 {
-                    b.Navigation("Bibliotecas");
-
                     b.Navigation("PromocaoJogos");
                 });
 
