@@ -8,8 +8,11 @@ namespace Infrastructure.Data
         public AppDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlite("Data Source=fiapcloudgames.db");
-
+            optionsBuilder.UseMySql
+            (
+                "Server=;Database=DbFiap;User=;Password=;",
+                new MySqlServerVersion(new Version(8, 0, 42))
+            );
             return new AppDbContext(optionsBuilder.Options);
         }
     }

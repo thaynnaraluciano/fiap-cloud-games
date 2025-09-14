@@ -202,7 +202,11 @@ builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql
+(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(8,0,42))
+));
 
 var app = builder.Build();
 
