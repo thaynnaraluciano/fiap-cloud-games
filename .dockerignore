@@ -1,0 +1,22 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/*.suo
+**/*.swp
+**/*.tmp
+**/TestResults/
+*.log
+
+# Repositório Git
+.git
+.gitignore
+
+# Configuração IDE
+*.csproj.user
+*.sln.docstates
+
+# Outros
+docker-compose.override.yml
+.env
