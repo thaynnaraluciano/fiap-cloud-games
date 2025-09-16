@@ -45,9 +45,9 @@ using Infrastructure.Data.Interfaces.Biblioteca;
 using Infrastructure.Data.Repositories.Biblioteca;
 using Domain.Commands.v1.Biblioteca.ComprarJogo;
 using Infrastructure.Data.Interfaces.Pagamento;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services
     .AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -202,7 +202,31 @@ builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Configuration.AddEnvironmentVariables();
+
+try
+{
+    Env.Load();
+}
+catch
+{
+    //Caso do deploy.
+    Console.WriteLine(".env não encontrado, usando apenas variáveis de ambiente...");
+}
+
+// Le variáveis de ambiente (do SO, .env ou secrets)
+string host = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+string db = Environment.GetEnvironmentVariable("DB_NAME") ?? "testdb";
+string user = Environment.GetEnvironmentVariable("DB_USER") ?? "root";
+string pass = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "";
+
+string connString = $"Server={host};Database={db};User={user};Password={pass};";
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql
+(
+    connString,
+    new MySqlServerVersion(new Version(8,0,42))
+));
 
 var app = builder.Build();
 

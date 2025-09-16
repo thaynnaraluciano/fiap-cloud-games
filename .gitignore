@@ -23,3 +23,4 @@
 /Tests/CommonTestUtilities/obj
 /Tests/Validators.Tests/bin/Debug/net8.0
 /Tests/Validators.Tests/obj
+*.env
