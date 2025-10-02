@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s   # a cada 5s Prometheus coleta métricas
+
+scrape_configs:
+  - job_name: 'api'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['api:8080']  # usa o nome do container (api)

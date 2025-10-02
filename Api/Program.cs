@@ -46,6 +46,9 @@ using Infrastructure.Data.Repositories.Biblioteca;
 using Domain.Commands.v1.Biblioteca.ComprarJogo;
 using Infrastructure.Data.Interfaces.Pagamento;
 using DotNetEnv;
+using Prometheus;
+using CrossCutting.Monitoring;
+using Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
@@ -201,6 +204,7 @@ builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 #endregion
 
 builder.Services.Configure<AppSettings>(builder.Configuration);
+builder.Services.AddSingleton<IMetricsService, MetricsService>();
 
 builder.Configuration.AddEnvironmentVariables();
 
@@ -242,6 +246,9 @@ app.UseReDoc(c =>
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseRequestMetrics();
+app.MapMetrics();
 
 app.UseAuthentication();
 app.UseAuthorization();

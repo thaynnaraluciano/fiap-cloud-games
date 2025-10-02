@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  api:
+    image: fiap-cloud-games-api:1.0.0
+    container_name: fiap-api
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: databasefiap.cnyy6mys0a3j.us-east-1.rds.amazonaws.com
+      DB_NAME: DbFiap
+      DB_USER: uFiapDesenv
+      DB_PASSWORD: EXrcXzfVUe2NYuggd2M4
+    networks:
+      - monitor-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitor-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3030:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - monitor-net
+
+networks:
+  monitor-net:
+    driver: bridge
