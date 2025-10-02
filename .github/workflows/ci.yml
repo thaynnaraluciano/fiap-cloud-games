@@ -1,12 +1,9 @@
 name: CI
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - feat/dev-deploy
 
 jobs:
   test:
@@ -55,3 +52,13 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE }}:${{ env.TAG }}
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
