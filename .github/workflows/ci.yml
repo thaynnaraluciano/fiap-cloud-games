@@ -9,6 +9,10 @@ permissions:
   contents: read
   id-token: write
 
+env:
+  DOCKERHUB_IMAGE: fiapcloudgames/tech-challenge
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -40,6 +44,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Definir tag da imagem
         id: vars
         run: |
@@ -50,19 +64,19 @@ jobs:
           fi
           echo "IMAGE=fiapcloudgames/tech-challenge" >> $GITHUB_ENV
 
-      - name: Build e Push da imagem
+      - name: Build and push image to Docker Hub & ECR
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ${{ env.IMAGE }}:${{ env.TAG }}
-      
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          tags: |
+            ${{ env.DOCKERHUB_IMAGE }}:${{ env.TAG }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+      # - name: Build e Push da imagem
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ env.IMAGE }}:${{ env.TAG }}
