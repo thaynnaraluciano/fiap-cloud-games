@@ -5,6 +5,10 @@ on:
     branches:
       - feat/dev-deploy
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
