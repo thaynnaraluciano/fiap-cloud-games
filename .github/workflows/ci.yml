@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     outputs:
-      ecr_image: ${{ steps.set-output.outputs.ecr_image }}
+      tag: ${{ steps.set-tag.outputs.tag }}
       docker_image: ${{ steps.set-output.outputs.docker_image }}
     steps:
       - name: Checkout do código
@@ -58,14 +58,14 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Definir tag da imagem
-        id: vars
+        id: set-tag
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "TAG=pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
           else
             echo "TAG=latest" >> $GITHUB_ENV
           fi
-          echo "IMAGE=fiapcloudgames/tech-challenge" >> $GITHUB_ENV
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
 
       - name: Build and push image to Docker Hub & ECR
         uses: docker/build-push-action@v5
@@ -91,12 +91,16 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Render ECS task definition
         id: render-task
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ecs/task-definition.json
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           container-name: fiap-cloud-games-web
           environment-variables: |
             DB_HOST=${{ secrets.DB_HOST }}
