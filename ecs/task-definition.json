@@ -15,7 +15,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/tech-challenge",
+          "awslogs-group": "/ecs/tech-challenge-task",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
