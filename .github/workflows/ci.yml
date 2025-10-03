@@ -34,6 +34,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: test
+    outputs:
+      ecr_image: ${{ steps.set-output.outputs.ecr_image }}
+      docker_image: ${{ steps.set-output.outputs.docker_image }}
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -74,9 +77,37 @@ jobs:
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
 
-      # - name: Build e Push da imagem
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ${{ env.IMAGE }}:${{ env.TAG }}
+  deploy:
+    needs: docker
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Render ECS task definition
+        id: render-task
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs/task-definition.json
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}
+          container-name: fiap-cloud-games-web
+          environment-variables: |
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render-task.outputs.task-definition }}
+          service: fiap-cloud-games-service
+          cluster: ${{ secrets.ECS_CLUSTER }}
+          # wait-for-service-stability: true
