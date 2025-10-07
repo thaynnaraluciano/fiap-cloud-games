@@ -19,8 +19,11 @@ namespace Domain.Commands.v1.Jogos.CriarJogo
 
             RuleFor(command => command.DataLancamento)
                 .GreaterThan(new DateTime(1970, 1, 1))
-                .LessThanOrEqualTo(DateTime.Now.AddYears(2))
-                .WithMessage("A data de lançamento deve estar dentro de um intervalo válido.");
+                .WithMessage("A data de lançamento deve ser posterior a 01/01/1970.");
+
+            RuleFor(command => command.DataLancamento)
+               .LessThanOrEqualTo(command => DateTime.Now.AddYears(2))
+               .WithMessage("A data de lançamento não pode ser superior a 2 anos.");
         }
     }
 }
