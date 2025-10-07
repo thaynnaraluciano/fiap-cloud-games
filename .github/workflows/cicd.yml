@@ -3,10 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - main
-  pull_request: 
-    branches: 
-      - main
+      - feat/dev-deploy
 
 permissions:
   contents: read
@@ -106,5 +103,5 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.render-task.outputs.task-definition }}
-          service: fiap-cloud-games-service
+          service: ${{ secrets.ECS_SERVICE }}
           cluster: ${{ secrets.ECS_CLUSTER }}
