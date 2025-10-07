@@ -3,7 +3,10 @@ name: CI/CD
 on:
   push:
     branches:
-      - feat/dev-deploy
+      - main
+  pull_request: 
+    branches: 
+      - main
 
 permissions:
   contents: read
