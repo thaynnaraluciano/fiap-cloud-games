@@ -84,7 +84,7 @@ jobs:
   deploy:
     needs: publish-image
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/dev-deploy'
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
