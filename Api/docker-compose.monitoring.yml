@@ -7,10 +7,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DB_HOST: databasefiap.cnyy6mys0a3j.us-east-1.rds.amazonaws.com
-      DB_NAME: DbFiap
-      DB_USER: uFiapDesenv
-      DB_PASSWORD: EXrcXzfVUe2NYuggd2M4
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_HOST=databasefiap.cnyy6mys0a3j.us-east-1.rds.amazonaws.com
+      - DB_NAME=DbFiap
+      - DB_USER=uFiapDesenv
+      - DB_PASSWORD=EXrcXzfVUe2NYuggd2M4
     networks:
       - monitor-net
 
@@ -20,7 +21,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - monitor-net
 
@@ -33,7 +34,19 @@ services:
       - prometheus
     networks:
       - monitor-net
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      # Volume persistente de dados (banco interno do Grafana)
+      - grafana-data:/var/lib/grafana
+
+      # Provisionamento automático de dashboards e datasources
+      - ./grafana/provisioning:/etc/grafana/provisioning
 
 networks:
   monitor-net:
     driver: bridge
+
+volumes:
+  grafana-data:
