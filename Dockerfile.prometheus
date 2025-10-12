@@ -1,0 +1,10 @@
+# Usa a imagem oficial do Prometheus
+FROM prom/prometheus:latest
+
+# Copia o arquivo prometheus.yml da pasta Api para dentro do container
+COPY Api/prometheus.yml /etc/prometheus/prometheus.yml
+
+# Expõe a porta padrão
+EXPOSE 9090
+
+CMD [ "--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus" ]
