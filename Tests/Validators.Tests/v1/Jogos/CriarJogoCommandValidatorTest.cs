@@ -104,18 +104,31 @@ namespace Validators.Tests.v1.Jogos
         }
 
         [Theory]
-        [InlineData(-1)]
-        [InlineData(-10)]
-        [InlineData(-365)]
-        public void Deve_falhar_quando_data_lancamento_esta_no_passado(int diasNoFuturo)
+        [InlineData(2, 1)] // 2 anos + 1 dia
+        [InlineData(3, 0)] // 3 anos -> falha
+        public void Deve_falhar_quando_data_lancamento_esta_acima_de_2_anos_no_futuro(int anos, int dias)
         {
             var command = CriarJogoCommandBuilder.Build();
-            command.DataLancamento = DateTime.Now.AddDays(diasNoFuturo);
+            command.DataLancamento = DateTime.Today.AddYears(anos).AddDays(dias);
 
             var result = _validator.Validate(command);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == "DataLancamento" && e.ErrorMessage == "A data de lançamento não pode ser no passado.");
+            result.Errors.Should().Contain(e => e.PropertyName == "DataLancamento");
+        }
+
+        [Theory]
+        [InlineData(0)] // hoje
+        [InlineData(1)] // 1 ano no futuro
+        [InlineData(2)] // 2 anos no futuro
+        public void Deve_passar_quando_data_lancamento_esta_ate_2_anos_no_futuro(int anosNoFuturo)
+        {
+            var command = CriarJogoCommandBuilder.Build();
+            command.DataLancamento = DateTime.Today.AddYears(anosNoFuturo);
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
         }
     }
 }

@@ -15,7 +15,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - monitor-net
 
@@ -28,7 +28,19 @@ services:
       - prometheus
     networks:
       - monitor-net
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      # Volume persistente de dados (banco interno do Grafana)
+      - grafana-data:/var/lib/grafana
+
+      # Provisionamento automático de dashboards e datasources
+      - ./grafana/provisioning:/etc/grafana/provisioning
 
 networks:
   monitor-net:
     driver: bridge
+
+volumes:
+  grafana-data:
