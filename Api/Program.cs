@@ -49,6 +49,7 @@ using DotNetEnv;
 using Prometheus;
 using CrossCutting.Monitoring;
 using Api.Extensions;
+using Prometheus.DotNetRuntime;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
@@ -244,6 +245,8 @@ app.UseReDoc(c =>
 });
 
 app.UseHttpsRedirection();
+
+DotNetRuntimeStatsBuilder.Default().StartCollecting();
 
 app.UseRouting();
 
