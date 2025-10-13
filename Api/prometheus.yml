@@ -13,4 +13,4 @@ scrape_configs:
     metrics_path: /metrics
     scheme: http
     static_configs:
-      - targets: ['http://fiap-api-alb-1474067110.us-east-1.elb.amazonaws.com/']
+      - targets: ['fiap-api-alb-1474067110.us-east-1.elb.amazonaws.com']
