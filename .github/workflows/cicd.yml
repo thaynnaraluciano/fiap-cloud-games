@@ -71,16 +71,6 @@ jobs:
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
 
-      # - name: Build and push Prometheus
-      #   run: |
-      #     docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap-prometheus:latest -f Dockerfile.prometheus .
-      #     docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap-prometheus:latest
-
-      # - name: Build and push Grafana
-      #   run: |
-      #     docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap-grafana:latest -f Dockerfile.grafana .
-      #     docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap-grafana:latest
-
   deploy:
     needs: publish-image
     runs-on: ubuntu-latest
