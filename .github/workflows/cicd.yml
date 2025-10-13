@@ -1,12 +1,15 @@
 name: CI/CD
 
 on:
+  # push:
+  #   branches:
+  #     - main
+  # pull_request: 
+  #   branches: 
+  #     - main
   push:
     branches:
-      - main
-  pull_request: 
-    branches: 
-      - main
+      - feat/monitoramento-aws
 
 permissions:
   contents: read

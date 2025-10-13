@@ -1,11 +1,11 @@
 {
-  "family": "tech-challenge-task",
+  "family": "fiap-cloud-games-api-task",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
-  "executionRoleArn": "arn:aws:iam::799857254706:role/ecsTaskExecutionRole",
-  "taskRoleArn": "arn:aws:iam::799857254706:role/ecsTaskRole",
+  "executionRoleArn": "arn:aws:iam::824205352856:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::824205352856:role/ecsTaskRole",
   "containerDefinitions": [
     {
       "name": "fiap-cloud-games-web",
@@ -15,7 +15,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/tech-challenge-task",
+          "awslogs-group": "/ecs/fiap-cloud-games-api-task",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
