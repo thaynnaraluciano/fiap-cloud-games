@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s # coleta a cada 15 segundos
+  evaluation_interval: 15s
+
+scrape_configs:
+  # --- Coleta padrão das próprias métricas do Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # --- Coleta de métricas da sua API hospedada no ECS
+  - job_name: 'fiap-cloud-games-api'
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: ['fiap-api-alb-1474067110.us-east-1.elb.amazonaws.com']

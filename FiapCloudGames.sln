@@ -5,29 +5,31 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C9D5B9FB-9E89-4154-AFC7-2B03638DC3F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{54EDB0AC-C23A-4AE1-9117-0D9B036107EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{54EDB0AC-C23A-4AE1-9117-0D9B036107EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{08CA16AA-01B5-4943-B0EB-C1DEE0C7F1A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{55D7F883-2A28-43FB-B94E-72985C68EAC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7A2455FA-8513-4459-81F2-66906473FE2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{7A2455FA-8513-4459-81F2-66906473FE2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{153715E6-8129-4C52-9BC8-D494C866C420}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting.Configuration", "CrossCutting\CrossCutting.Configuration\CrossCutting.Configuration.csproj", "{AF1DF0F7-EDDE-4012-AA5C-5BC1322D8149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossCutting.Configuration", "CrossCutting\CrossCutting.Configuration\CrossCutting.Configuration.csproj", "{AF1DF0F7-EDDE-4012-AA5C-5BC1322D8149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting.Exceptions", "CrossCutting\CrossCutting.Exceptions\CrossCutting.Exceptions.csproj", "{ED5ED88F-98AD-49A5-BAA3-530FA3A32960}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossCutting.Exceptions", "CrossCutting\CrossCutting.Exceptions\CrossCutting.Exceptions.csproj", "{ED5ED88F-98AD-49A5-BAA3-530FA3A32960}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BFE12492-E9E9-48F6-B26D-D90FD6870F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Data", "Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj", "{343A0A76-CEC1-4A2C-BAD3-10A47C12D9A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data", "Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj", "{343A0A76-CEC1-4A2C-BAD3-10A47C12D9A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Services", "Infrastructure\Infrastructure.Services\Infrastructure.Services.csproj", "{C8133C52-B215-44C7-9A2B-AA68CAE71FB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Services", "Infrastructure\Infrastructure.Services\Infrastructure.Services.csproj", "{C8133C52-B215-44C7-9A2B-AA68CAE71FB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "Tests\Validators.Tests\Validators.Tests.csproj", "{7A4DDC8B-038C-4FEF-9310-3868FFC6830A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validators.Tests", "Tests\Validators.Tests\Validators.Tests.csproj", "{7A4DDC8B-038C-4FEF-9310-3868FFC6830A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTestUtilities", "Tests\CommonTestUtilities\CommonTestUtilities.csproj", "{9856BCF8-BFC9-4143-AB63-892C1D37A748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTestUtilities", "Tests\CommonTestUtilities\CommonTestUtilities.csproj", "{9856BCF8-BFC9-4143-AB63-892C1D37A748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting.Monitoring", "CrossCutting\CrossCutting.Monitoring\CrossCutting.Monitoring.csproj", "{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{9856BCF8-BFC9-4143-AB63-892C1D37A748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9856BCF8-BFC9-4143-AB63-892C1D37A748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9856BCF8-BFC9-4143-AB63-892C1D37A748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,9 @@ Global
 		{C8133C52-B215-44C7-9A2B-AA68CAE71FB5} = {BFE12492-E9E9-48F6-B26D-D90FD6870F5A}
 		{7A4DDC8B-038C-4FEF-9310-3868FFC6830A} = {08CA16AA-01B5-4943-B0EB-C1DEE0C7F1A8}
 		{9856BCF8-BFC9-4143-AB63-892C1D37A748} = {08CA16AA-01B5-4943-B0EB-C1DEE0C7F1A8}
+		{BDAA9936-7AA1-4F3A-BAA3-1BD583939CB6} = {153715E6-8129-4C52-9BC8-D494C866C420}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69E588AD-11B2-406E-B37A-AA24B7FDAC98}
 	EndGlobalSection
 EndGlobal

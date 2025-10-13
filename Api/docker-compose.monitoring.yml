@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    image: fiap-cloud-games-api:1.0.0
+    container_name: fiap-api
+    ports:
+      - "8080:8080"
+    networks:
+      - monitor-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitor-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3030:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - monitor-net
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      # Volume persistente de dados (banco interno do Grafana)
+      - grafana-data:/var/lib/grafana
+
+      # Provisionamento automático de dashboards e datasources
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+networks:
+  monitor-net:
+    driver: bridge
+
+volumes:
+  grafana-data:

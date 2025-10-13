@@ -1,0 +1,15 @@
+# Usa a imagem oficial e estável do Prometheus
+FROM prom/prometheus:latest
+
+# Define o diretório de trabalho padrão
+WORKDIR /etc/prometheus
+
+# Copia o arquivo de configuração
+COPY prometheus.yml /etc/prometheus/prometheus.yml
+
+# Expõe a porta padrão do Prometheus
+EXPOSE 9090
+
+# Define o ponto de entrada e os argumentos de inicialização
+ENTRYPOINT [ "/bin/prometheus" ]
+CMD [ "--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus", "--web.console.libraries=/usr/share/prometheus/console_libraries", "--web.console.templates=/usr/share/prometheus/consoles" ]
